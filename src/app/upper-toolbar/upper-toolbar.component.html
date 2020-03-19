@@ -1,0 +1,64 @@
+<div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="end center">
+    
+    <div id="logo" class="link" fxFlex="23%" fxLayoutAlign="center" fxShow="true" fxLayoutAlign.sm="start center" fxLayoutAlign.xs="start center">   
+
+        <a routerLinkActive="active" routerLink="MainPage"><h3><i class="fas fa-dumbbell"></i>Gravity Gym</h3></a>
+
+        <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+            <mat-icon>menu</mat-icon>
+        </button>
+
+    </div>
+
+    <div class="link" fxFlex="15%" fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a routerLinkActive="active" routerLink="About" mat-button>About</a>
+    </div>
+
+    <div class="link" fxFlex="15%" fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a routerLinkActive="active" routerLink="Prices" mat-button>Prices</a>
+    </div>
+
+    <div class="link" fxFlex="15%" fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a routerLinkActive="active" routerLink="Contacts" mat-button>Contacts</a>
+    </div>
+
+    <div *ngIf="!Logged()" class="link" fxFlex="15%" fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a routerLinkActive="active" routerLink="Register" mat-button>Register</a>
+    </div>
+
+    <div *ngIf="Logged()" class="link" fxFlex="15%" fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a routerLinkActive="active" routerLink="Cabinet" mat-button>Cabinet</a>
+    </div>
+
+    <div *ngIf="!Logged()" class="link" fxFlex="15%"fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a mat-button (click)="openDialog()">Login</a>
+    </div>
+
+    <div *ngIf="Logged()" class="link" fxFlex="15%"fxLayoutAlign="center" fxShow="true" fxHide.lt-md>
+        <a mat-button (click)="Logout()">Logout</a>
+    </div>
+
+    <div fxFlex="1%">
+        
+    </div>
+</div>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+        <mat-nav-list>
+            <!-- <a (click)="sidenav.toggle()" href="" mat-list-item>Close</a> -->
+            <a *ngIf="!Logged()" (click)="openDialog()" (click)="sidenav.toggle()"     mat-list-item>Login</a>            
+            <a *ngIf="Logged()" (click)="Logout()"      (click)="sidenav.toggle()"     mat-list-item>Logout</a>            
+            <a *ngIf="!Logged()" routerLinkActive="active" routerLink="Register" (click)="sidenav.toggle()" mat-list-item>Register</a>
+            <a *ngIf="Logged()"  routerLinkActive="active" routerLink="Cabinet" (click)="sidenav.toggle()" mat-list-item>Cabinet</a>
+            <a routerLinkActive="active" routerLink="Prices" (click)="sidenav.toggle()" mat-list-item>Prices</a>
+            <a routerLinkActive="active" routerLink="About" (click)="sidenav.toggle()" mat-list-item>About</a>
+            <a routerLinkActive="active" routerLink="Contacts" (click)="sidenav.toggle()" mat-list-item>Contacts</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content [ngClass] ="{'fade': fadeIt}">
+        
+        <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

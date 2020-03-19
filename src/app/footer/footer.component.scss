@@ -1,0 +1,23 @@
+div{
+    height: 40px;
+    background-color: rgb(80,80,100);    
+    color: rgb(150,150,180);
+    border-top: 1px solid black;
+
+}
+
+i{
+    margin: 0 5px 0 5px;    
+}
+a{
+    text-decoration: none;
+    color: #5d6800;    
+    transition: color 0.5s;
+}
+a:active{
+    color: rgba(50,50,100,0.5);
+}
+
+.active{
+    border-bottom: 2px solid black;
+}

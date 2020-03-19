@@ -1,0 +1,93 @@
+<!-- <div class="spanner"></div> -->
+<div [ngClass] ="{'fade': fadeIt, 'container': true}"  fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="space-evenly center">
+
+    <div fxFlex="50%"  class="registerPageInfo mat-elevation-z8">
+
+        <h1>Welcome to our Center!</h1>
+        <h2>Where The Force Meets The Goals!</h2>
+        <p>Become a member in order to access our Services!</p>
+        <div class="list">
+            <ul>
+                <li>Free Logs for your body Progress</li>
+                <li>Track your workouts</li>
+                <li>Feedbacks</li>
+                <li>Paid Services</li>
+                <li>Receive Advices from our staff</li>
+                <li>And Many More!</li>
+            </ul>
+        </div>
+        
+    </div>
+
+    <div fxFlex="50%" class="registrationFormContainer mat-elevation-z8">
+    
+        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+    
+            <h2>Register:</h2>
+    
+        </div>
+    
+        <form novalidate  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    
+            <div class="inputs">
+    
+                <mat-form-field>
+                    <input matInput placeholder="User Name *" formControlName="userName">
+                </mat-form-field>
+
+                <div  *ngIf="registerForm.get('userName').errors?.minlength" class="errors">    
+                    User Name must be four characters minimum        
+                </div>
+
+                <div  *ngIf="registerForm.get('userName').errors?.nameTaken" class="errors">    
+                    Name is Already Taken        
+                </div>
+
+                <mat-form-field>
+                    <input type="email" [class.invalid]="registerForm.errors?.emailMissMatch" matInput placeholder="Email *" formControlName="userEmail" >
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <input type="email" [class.invalid]="registerForm.errors?.emailMissMatch" matInput placeholder="Confirm Email *" formControlName="confirmUserEmail" autocomplete="off">
+                </mat-form-field>
+    
+                <div *ngIf="registerForm.errors?.emailMissMatch" class="errors">
+                    Emails do not match
+                </div>
+
+                <mat-form-field>
+                    <input type="password" [class.invalid]="registerForm.errors?.missMatch" matInput placeholder="Password *" formControlName="password">
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <input type="password" [class.invalid]="registerForm.errors?.missMatch" matInput placeholder="Confirm Password *" formControlName="confirmPassword">
+                </mat-form-field>    
+                
+            </div>   
+           
+    
+            <button [disabled]="!registerForm.valid" mat-button type="submit">REGISTER</button>
+
+            <div *ngIf="hasErrors" fxLayoutAlign="center center">    
+               <mat-progress-spinner diameter="40" mode="indeterminate" strokeWidth="15"></mat-progress-spinner>    
+            </div>
+
+
+            <div *ngIf="registerForm.errors?.missMatch" class="errors">
+    
+                Passwords do not match
+    
+            </div>
+
+
+            <div *ngIf="hasErrors" class="errors">    
+                {{errResponse}}    
+            </div>
+
+
+            <!-- [disabled]="!registerForm.valid" -->
+        </form>
+        
+    </div>
+    
+</div>

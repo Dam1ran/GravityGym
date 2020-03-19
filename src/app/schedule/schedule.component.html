@@ -1,0 +1,56 @@
+<div class="container">
+
+    <mat-tab-group>
+        <mat-tab label="Monday">
+            <ng-template matTabContent>
+                
+                <app-monday></app-monday>
+
+
+
+
+
+
+
+
+                Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Tuesday">
+            <ng-template matTabContent>
+                <app-tuesday></app-tuesday>
+                Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+
+        
+        <mat-tab label="Wednesday">
+            <ng-template matTabContent>
+                <app-wednesday></app-wednesday>
+                Content 3 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Thursday">
+            <ng-template matTabContent>
+                Content 4 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Friday">
+            <ng-template matTabContent>
+                Content 5 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Saturday">
+            <ng-template matTabContent>
+                Content 6 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Sunday">
+            <ng-template matTabContent>
+                Content 7 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>

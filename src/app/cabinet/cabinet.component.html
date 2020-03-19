@@ -1,0 +1,52 @@
+<!-- <p>cabinet works!</p>
+     fxLayoutAlign="center start"
+<button (click)="kek()" >asdasddd</button> -->
+<div [ngClass] ="{'fade': fadeIt, 'container': true}" >
+
+    <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="My Workouts">
+            <ng-template matTabContent>
+                Ma workouts                
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Useful Links">
+            <ng-template matTabContent>
+                <app-useful-links></app-useful-links>
+            </ng-template>
+        </mat-tab>
+
+        
+        <mat-tab label="Progress Log">
+            <ng-template matTabContent>
+                track your shit here
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Personal Info">
+            <ng-template matTabContent>
+                some shit about your majesty
+            </ng-template>
+        </mat-tab>
+
+
+        <mat-tab label="[Other] Optionals">
+            <ng-template matTabContent>
+                ROLE OPTIONS
+            </ng-template>
+        </mat-tab>
+
+        <!-- <mat-tab label="Manage Coaches">
+            <ng-template matTabContent>
+                Content 6 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Sunday">
+            <ng-template matTabContent>
+                Content 7 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+            </ng-template>
+        </mat-tab> -->
+    </mat-tab-group>
+
+
+</div>

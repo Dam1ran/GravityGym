@@ -1,0 +1,55 @@
+.rowElement{
+    width: 100%;
+}
+
+.description{
+    font-size: 18px;
+    color: whitesmoke;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;    
+    margin-left: 20px;
+    text-shadow: 0 0 5px rgba(0,0,0,0.4);
+
+}
+
+.buttons{
+    width: fit-content;
+    flex: none;
+}
+
+
+a,button{
+    background-color: rgba(0,0,0,0.4);
+    color: rgb(255, 170, 50);
+    font-size: 16px;
+    text-shadow: 0 0 5px rgba(255,255,255,0.3);    
+    .fa-trash-alt{
+        color: red;
+    }
+}
+
+
+.adminRow{
+    background-color: rgba(200,50,200,0.4);
+    padding: 10px;
+}
+
+
+h3{
+    padding: 0;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: clip;
+    margin: 0;
+}
+
+input{
+    text-align: center;
+    background-color: rgba(255,255,255,0.8);
+    border: none;
+    font-size: 18px; 
+    margin: 5px;    
+    border-radius: 5px;      
+    width: 300px;
+}

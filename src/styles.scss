@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body{
+    // background-color: rgb(230,230,250);
+    background-color: rgb(50, 50, 82);
+    overflow-y: hidden;
+    
+}
+
+.custom-modalbox {
+    mat-dialog-container {
+        padding: 5px;
+    }
+}
+
+.fade {
+    animation-fill-mode: forwards;
+    // anim
+    animation-name: fade-animation;
+    animation-duration: 0.5s;
+    // opacity: 0.0;
+
+  }
+    
+  @keyframes fade-animation {
+    0% {
+      opacity: 0.0;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+  }

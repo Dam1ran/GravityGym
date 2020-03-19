@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Teko&display=swap');
+
+.container{
+    background-color: rgb(255, 170, 50);    
+    border-bottom: 2px solid rgba(0,0,0,0.7);    
+    a{
+        font-family: 'Teko', sans-serif;
+        font-weight: 700;
+        font-size: 28px;
+        letter-spacing: 3px;
+    }
+}
+
+#logo{
+    background-image: linear-gradient(rgb(255, 223, 179),rgb(255, 170, 50));
+    h3{
+        // font-size: 20px;
+        text-align: center;
+        margin: 0;
+    }
+}
+
+mat-sidenav{    
+
+    text-align: center;
+    width: 180px;
+    background-color: rgb(255, 170, 50);
+    background-image: linear-gradient(rgb(255, 170, 50),black);
+
+    a{
+        color: rgb(230,230,250);
+        width: 150px;
+        margin: 0 0 0 auto;
+    }
+
+}
+
+mat-sidenav-container{
+    height: calc(100vh - 101px);
+    mat-sidenav-content{
+        height: calc(100vh - 101px);
+        background-color: rgb(50, 50, 80);
+        // background-image: linear-gradient(145deg, rgba(110, 110, 150,0.8),rgba(20, 20, 50,0.8));
+        background-image: linear-gradient(145deg, rgba(46, 84, 173, 0.9),rgba(92, 32, 17, 0.8));
+        //overflow-x: hidden;
+
+    }
+}
+
+.link{
+    width: 100%;
+}
+
+a{
+    font-size: 20px;
+    width: 100%;
+    padding: 5px;
+    transition: 1s;
+    border-bottom: 2px solid rgba(50, 50, 50,0);
+}
+
+i{
+    margin-right: 10px;
+    font-size: 30px;
+    color: rgb(120, 20, 20);
+}
+
+button{
+    width: 20%;
+    height: 100%;
+    .mat-icon {
+        width: 100%;
+        height: 100%;
+        font-size: 36px;
+    }
+}
+
+.active{
+    color: rgb(120, 20, 20);
+    text-shadow: 0 0 10px whitesmoke;
+    background-color: rgba(black,0.2);
+    border-bottom: 2px solid rgba(50, 50, 50,1);
+}
+

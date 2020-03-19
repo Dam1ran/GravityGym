@@ -1,0 +1,119 @@
+.spanner{
+    height: calc(25% - 127px);
+}
+
+.container{
+    margin-top: 3%;
+}
+
+.registerPageInfo{
+    background-color: rgba(255,255,255,0.2);    
+    text-align: center;
+    cursor: default;        
+    padding-bottom: 10px;
+    width: 100%;
+    min-height: 580px;
+}
+
+.registrationFormContainer{
+    background-color: rgba(0,0,0,0.5);    
+    text-align: center;
+    width: 100%;
+    min-height: 580px;
+
+}
+
+h1{
+    text-shadow: 0 0 50px white;
+    padding-bottom: 10px;
+    border-bottom: 3px solid rgb(150,20,20);
+
+}
+
+h2{
+    color: rgb(255, 170, 80);     
+}
+
+p{
+    color: white;
+    font-size: 18px;
+    text-shadow: 0 0 2px yellow;
+}
+
+.list{
+    margin: 0 auto;
+    width: 100%;
+}
+
+ul{    
+    margin: inherit;
+    padding: 0;
+    list-style: none;    
+    text-decoration: underline;
+    li{
+        text-align: center; 
+        display: inline-block;
+        padding: 3px;
+        margin: 10px;
+        background-color: rgba(255,255,255,0.2);
+        border-radius: 5px;
+        width: 90%;      
+        font-weight: 700;
+    }
+}
+
+
+.header{
+    color: white;
+    border-bottom: 3px solid rgb(150,20,20);
+    margin-bottom: 10px;
+    h2{
+        margin-left: 10px;        
+    }
+
+}
+
+.errors{    
+    color: rgb(255,0,0);
+
+    white-space: pre;
+    
+    text-align: center;
+    margin-bottom: 10px;
+
+
+    font-size: 16px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    cursor: default;
+}
+
+.invalid{
+    background-color: rgba(255,0,0,0.3);
+}
+
+form{
+    width: 100%;
+}
+
+.inputs{    
+    // background-color: blue;
+    padding: 7px;
+}
+
+mat-form-field{
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    max-width: 400px;
+    background-color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    border-radius: 5px;
+    border-bottom: 3px solid rgb(60,60,60);
+}
+
+button{
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(255, 170, 50);
+    font-size: 20px;
+}

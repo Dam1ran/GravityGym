@@ -1,0 +1,42 @@
+<div *ngIf="!fadeIt" class="container" fxLayout="column" fxLayoutAlign="center center">
+    <mat-progress-spinner  mode="indeterminate"></mat-progress-spinner>
+</div>
+
+
+<div [ngClass] ="{'fade': fadeIt,'container':true}"  fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="space-around center">
+
+    <div fxLayoutAlign="center center" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <div fxLayout="column" fxLayoutAlign="end center" >            
+
+            <div id="imgWrapper">
+                <img src="../../assets/couple_shapes.png" (load)="fade()" alt="couple_shape">
+            </div>
+
+            <div class="buttons" layout="row" layout-align="end center">
+                <button routerLink="/Gallery" mat-flat-button class="mat-elevation-z8">
+                    Gallery
+                </button>
+                <button routerLink="/Schedule" mat-flat-button class="mat-elevation-z8">
+                    Schedule
+                </button>
+                <button routerLink="/OurTeam" mat-flat-button class="mat-elevation-z8">
+                    Our Team
+                </button>
+            </div>
+
+        </div>
+        
+    </div>
+
+
+    <div fxLayoutAlign="center center" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">  
+        
+        <div class="texts">
+            <h1>GRAVITY GYM</h1>
+            <H2>Where The Force Meets The Goals!</H2>
+        </div>
+        
+    </div>
+
+</div>
+

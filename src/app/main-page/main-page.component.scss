@@ -1,0 +1,37 @@
+.container{
+    background-image: url("../../assets/line.png");
+    background-repeat: no-repeat;
+    background-position: 50% 52%;
+    background-size: 100% 4%;
+    overflow-x: hidden;
+    // opacity: 0.0;
+}
+
+h1{
+    color: whitesmoke;
+    font-size: 50px;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 5px;
+}
+h2{
+    color: rgb(255, 170, 80);    
+    text-align: center;
+
+}
+
+button{
+    padding: 5px 20px;
+    margin: 5px 5px;
+    width: 110px;
+    background-color: rgb(50,50,70);
+    border: 1px solid black;
+    color: whitesmoke;
+}
+
+
+@media only screen and (min-width: 1024px) {
+    .container{
+        height: 100%;
+    }
+}

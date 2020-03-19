@@ -1,0 +1,9 @@
+<p>wednesday works!</p>
+<!-- <input type="file" (change)="upload($event.target.files)"> -->
+<button (click)="GetSchedule()">fememe </button>
+
+<h2>for wednesday</h2>
+<ul *ngFor="let activity of lstDaySchedule">
+    <li> {{activity.id}} {{ activity.dayOfWeek | date :'EEEE' }} {{activity.description}} {{activity.hourMinute}} <img src="{{activity.imageUrl}}"/></li>
+</ul>
+

@@ -1,0 +1,33 @@
+
+<div [ngClass] ="{'shake': shakeIt, 'container': true}">    
+    <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+        <h3 fxLayout="column">SignIn</h3>
+        <i (click)="closeModal()" fxLayout="column" class="fas fa-times"></i>
+    </div>
+    
+
+    <form novalidate [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
+        
+            
+                <mat-form-field>
+                    <input type="email" matInput placeholder="Email" formControlName="userEmail">
+                </mat-form-field>
+            
+    
+         
+                <mat-form-field>
+                    <input type="password" matInput placeholder="Password" formControlName="password" >
+                </mat-form-field>
+                
+                <small *ngIf="wrongCredentials">Wrong Credentials</small>
+    
+            <button [disabled]="!loginForm.valid" mat-button type="submit">LOGIN</button>
+            
+        
+    </form>
+    
+        
+    <!-- {{ loginForm.value | json }}  -->
+
+    
+</div>

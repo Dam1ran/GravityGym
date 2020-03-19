@@ -1,0 +1,43 @@
+<mat-list>
+    <div *ngFor="let link of usefulLinks">
+        <mat-list-item>
+            <div class="rowElement" fxLayout="row" fxLayoutWrap fxLayoutAlign="space-between center">           
+
+                <div class="buttons mat-elevation-z8">   
+                    
+                    <a mat-button *ngIf="isAdminRole" (click)="onDelete(link.id)"><i class="far fa-trash-alt"></i></a>
+
+                    <a target="_blank" href="{{ link.link }}" mat-button >Visit Link</a>
+
+                </div>
+
+                <div class="description">
+                    {{ link.description }}
+                </div>
+                
+                <span style="flex: 1 1 auto;"></span>
+
+
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </div>
+
+</mat-list>
+
+
+<form [formGroup]="usefulLinkForm">
+    <div *ngIf="isAdminRole" class="rowElement adminRow" fxLayout="row" fxLayoutAlign="center center" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap>
+
+        <h3>Add new Link:</h3>
+
+        <input type="text" name="LinkString" matInput placeholder="Link" autocomplete="off" formControlName="link" />
+
+        <input type="text" name="descString" matInput placeholder="Description" autocomplete="off" formControlName="description" />
+
+        <button [disabled]="!usefulLinkForm.valid" mat-button (click)="addLink()">
+            <i class="fas fa-plus-circle"></i>
+        </button>
+
+    </div>
+</form>
