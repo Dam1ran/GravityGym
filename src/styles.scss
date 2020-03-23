@@ -33,3 +33,18 @@ body{
         opacity: 1.0;
     }
   }
+
+
+.elementToFadeInAndOut{
+  -webkit-animation: fadeinout 2s linear forwards;
+  animation: fadeinout 2s linear forwards;
+  opacity: 0;
+}
+
+@-webkit-keyframes fadeinout {
+  20%{ opacity: 1;}
+}
+
+@keyframes fadeinout {
+  20%{ opacity: 1;}
+}

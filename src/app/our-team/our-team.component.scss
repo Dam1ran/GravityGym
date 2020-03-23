@@ -1,0 +1,119 @@
+
+h2{
+    text-align: center;
+    font-size: 40px;
+    padding: 20px 0;
+    margin: 20px 3%;
+    background-color: rgba(255,255,255,0.2);
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    border-bottom: 2px solid rgb(255, 170, 50);
+    border-top: 2px solid rgb(255, 170, 50);
+    border-radius: 10px;
+}
+
+.teamDesc{
+    text-align: center;
+    color: whitesmoke;
+    margin: 30px 3%;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    padding: 15px;
+    background-color: rgba(255,255,255,0.1);   
+    font-size: 18px;
+}
+
+
+.example-card {
+    max-width: 400px;
+    min-width: 250px;
+    margin: 10px;
+    background-color: rgba(255,255,255,0.9);
+}
+
+mat-card-header{
+    button{
+        color: red;
+        margin-left: auto;
+        font-size: 18px;
+    }
+}
+
+.example-header-image {
+  background-size: cover;
+}
+
+
+.moto{    
+    font-weight: 700 !important;
+    padding: 10px !important;
+    font-style: italic;
+    text-align: center;
+    width: 101%;
+    background-color: rgb(255, 170, 50);
+    box-shadow: 0 0 10px rgba(0,0,0,0.9);   
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.mat-card-content{
+    p{
+        font-size: 16px;
+        height: 150px; 
+    }  
+    
+}
+
+
+
+
+
+
+.adminRow{
+    background-color: rgba(200,50,200,0.4);
+    padding: 10px;
+    
+    
+}
+
+h3{
+    padding: 5px;
+    margin: 5px;    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    display: block;
+    width: 305px;
+    background-color: rgba(200,200,200,0.3);
+    border-radius: 5px;      
+}
+
+input,textarea{
+    width: 300px;
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: rgba(116, 79, 204, 0.4);
+    color: whitesmoke;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    border: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+label{
+    display: block;
+    width: 300px;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.description{
+    width: 300px;
+    padding: 5px ;
+    margin: 5px;
+}
+
+.sbutton{
+    background-color: rgba(0,0,0,0.4);
+    color: rgb(255, 170, 50);
+    width: 310px;
+    text-shadow: 0 0 5px rgba(255,255,255,0.3);        
+}

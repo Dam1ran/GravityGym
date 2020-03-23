@@ -1,1 +1,42 @@
-<p>gallery works!</p>
+<div [ngClass] ="{'fade': fadeIt, 'container': true}">
+
+    <H2 fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z8" >
+
+        <button [disabled]="!previous" mat-button (click)="previousPage()"><i class="fas fa-chevron-circle-left"></i></button> 
+
+        Gallery 
+
+        <button [disabled]="!next" mat-button (click)="nextPage()"><i class="fas fa-chevron-circle-right"></i></button>
+
+    </H2>
+
+    <mat-progress-spinner *ngIf="!loaded" mode="indeterminate"></mat-progress-spinner>
+    <div class="spanner">
+
+    
+    <div *ngIf="loaded" fxLayout="row | wrap"  fxLayoutAlign="center center" >        
+
+        
+            <div  *ngFor="let imageUrl of galleryImagesDTO.listOfUrls; let i=index" [ngClass] ="{'imageContainer': true}" >   
+
+                <img src="{{imageUrl}}" height="400" alt="gallery image">                
+
+            </div>
+
+
+    </div>
+
+    </div>
+    
+    <H2 fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z8" >
+
+        <button [disabled]="!previous" mat-button (click)="previousPage()"><i class="fas fa-chevron-circle-left"></i></button> 
+
+        GravityGym 
+
+        <button [disabled]="!next" mat-button (click)="nextPage()"><i class="fas fa-chevron-circle-right"></i></button>
+
+    </H2>
+    
+   
+</div>

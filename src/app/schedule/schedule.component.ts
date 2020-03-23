@@ -1,25 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Fader } from '../Shared/fader';
 
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
-})
-export class ScheduleComponent implements OnInit {
+  styleUrls: ['./schedule.component.scss'],
+  encapsulation: ViewEncapsulation.None
 
-  constructor() { }
+})
+export class ScheduleComponent extends Fader implements OnInit {
+
+  constructor() { super() }
+
+  private WeekDays: string[] = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
   ngOnInit() {
+    this.fade();
   }
-
-  tabLoadTimes: Date[] = [];
-
-  getTimeLoaded(index: number) {
-    if (!this.tabLoadTimes[index]) {
-      this.tabLoadTimes[index] = new Date();
-    }
-
-    return this.tabLoadTimes[index];
-  }
+  
 
 }

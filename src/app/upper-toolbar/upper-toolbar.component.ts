@@ -54,6 +54,7 @@ export class UpperToolbarComponent extends Fader implements OnInit {
 
   Logout(){
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('userRole');
     this.router.navigate(['MainPage']);
   }
 

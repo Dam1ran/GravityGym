@@ -1,1 +1,99 @@
-<p>our-team works!</p>
+<div [ngClass] ="{'fade': fadeIt, 'container': true}">
+    
+    <H2 class="mat-elevation-z8" >Meet Our Team</H2>
+
+    <p class="teamDesc">
+        Our leaders believe the most innovative ideas come to life when our people are inspired to take risks, create opportunity and be their best selves.
+    </p>
+
+    <div fxLayout="row | wrap" fxLayout.sm="column" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
+
+
+        
+        <mat-card class="mat-elevation-z8 example-card" *ngFor="let teamMember of ourTeamMembers">
+
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"><img src="{{teamMember.avatarUrl}}" height="40"  width="40"  alt="Avatar"></div>
+                <mat-card-title>{{teamMember.fullName}}</mat-card-title>
+                <mat-card-subtitle>{{teamMember.activity}}</mat-card-subtitle>
+                <button *ngIf="isAdminRole" mat-button (click)="deleteTeamMember(teamMember.id)"><i class="far fa-trash-alt"></i></button>
+            </mat-card-header>
+
+            <img class="cardImage" mat-card-image src="{{teamMember.imageUrl}}" width="400" alt="Team Member">
+         
+            <div fxLayout="column">
+                <mat-card-content>
+                    <p>{{teamMember.description}}</p>
+                    </mat-card-content>
+                    <!-- <mat-card-actions > -->
+                    <div fxFlexAlign="end" class="moto">"{{teamMember.moto}}"</div>
+                <!-- </mat-card-actions> -->
+            </div>
+
+
+            
+            
+        </mat-card>      
+          
+          
+
+          
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+
+    <form *ngIf="isAdminRole" [formGroup]="ourTeamForm">
+
+        <div  class="adminRow" fxLayout="column" fxLayoutAlign="center center" fxLayoutWrap>
+  
+        
+        <h3>Add new Our Team Member:</h3>
+                                                                <!--(change)="handleFileInput($event.target.files)"  -->
+        <label for="avatarUrl">Avatar Image:</label>                                                        
+        <input class="fileInput" type="file" id="avatarUrl" #avatarUrl formControlName="avatarUrl" accept="image/*" (change)="handleAvatarInput($event.target.files)" />
+
+        <input type="text" name="fullName" matInput placeholder="Full Name" autocomplete="off" formControlName="fullName" />
+
+        <input type="text" name="activity" matInput placeholder="Activity" autocomplete="off" formControlName="activity" />         
+  
+        <label for="imageUrl">Main Image:</label>                                                        
+        <input class="fileInput" type="file" #imageUrl formControlName="imageUrl" accept="image/*" (change)="handleImageInput($event.target.files)" />
+
+        <textarea class="description" type="text" name="description" matInput placeholder="Description" autocomplete="off" formControlName="description"></textarea>
+  
+        <input type="text" name="moto" matInput placeholder="Moto" autocomplete="off" formControlName="moto" />         
+        
+  
+  
+        <!-- [disabled]="imageUrl.value=='' || !dayScheduleForm.valid" -->
+        <button class="sbutton" [disabled]="imageUrl.value=='' || avatarUrl.value=='' || !ourTeamForm.valid"
+         mat-button (click)="addTeamMember()">
+          <i class="fas fa-plus-circle"></i>
+        </button>
+  
+      
+  
+    </div>
+  </form>
+    
+    
+    
+    
+    
+    
+    
+</div>

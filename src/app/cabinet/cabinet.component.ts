@@ -16,9 +16,4 @@ export class CabinetComponent extends Fader implements OnInit {
     this.fade()
   }
 
-  kek(){
-    this.auth.zeze().subscribe(
-      res=>{console.log(res);}
-    );
-  }
 }

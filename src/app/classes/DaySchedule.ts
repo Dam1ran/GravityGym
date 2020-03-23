@@ -1,9 +1,8 @@
-import { WeekDay } from '@angular/common';
-
-export interface IDaySchedule {
+export class DaySchedule {
+    Time: string;
+    Practice: string;
     id: number;
-    dayOfWeek: WeekDay;
-    hourMinute: string;
+    dayOfWeek: string;
     description: string;
     imageUrl: string;
 }

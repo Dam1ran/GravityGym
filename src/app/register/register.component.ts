@@ -24,11 +24,12 @@ export class RegisterComponent extends Fader implements OnInit {
   public errResponse: string = ''; 
   public hasErrors: boolean = false; 
   public bounceTimeMs: number = 1000;
-
+  public notification = null;
 
   constructor( 
     private auth:AuthService,
-    private fb: FormBuilder    
+    private fb: FormBuilder,
+    private router: Router    
   ) {
     super();
   }
@@ -70,14 +71,16 @@ export class RegisterComponent extends Fader implements OnInit {
 
     this.hasErrors = true;
 
-    this.auth.register(this.registerForm.value)
-    //.pipe(map((res: Response) => res.json()))
+    this.auth.register(this.registerForm.value)    
     .subscribe(
         (res) =>
         {
           this.hasErrors = false;
-//handle approprietly success registration
-          //console.log(res)           
+          this.notification = 'Accuount Created!'
+          this.registerForm.disable();
+
+          setTimeout(()=>{this.router.navigate(['MainPage']);},2000);
+
         },
         (error: HttpErrorResponse) =>
         {        

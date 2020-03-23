@@ -18,7 +18,8 @@ import {
          MatLabel,         
          MatFormFieldModule,
          MatInputModule,
-         MatProgressSpinner
+         MatProgressSpinner,         
+         MatCardModule
                 
         }
          from "@angular/material";
@@ -36,13 +37,14 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { OurTeamComponent } from './our-team/our-team.component';
 import { TuesdayComponent } from './ScheduleDays/tuesday/tuesday.component';
 import { MondayComponent } from './ScheduleDays/monday/monday.component';
-import { WednesdayComponent } from './scheduledays/wednesday/wednesday.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CabinetComponent } from './cabinet/cabinet.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { AutocompleteDirective } from './autocomplete.directive';
 import { UsefulLinksComponent } from './useful-links/useful-links.component';
+import { DayScheduleComponent } from './day-schedule/day-schedule.component';
+
 
 
 @NgModule({
@@ -60,14 +62,15 @@ import { UsefulLinksComponent } from './useful-links/useful-links.component';
     GalleryComponent,
     OurTeamComponent,    
     TuesdayComponent,
-    MondayComponent,
-    WednesdayComponent,
+    MondayComponent,    
     LoginDialogComponent,
     CabinetComponent,
     MatProgressSpinner,
     AccessDeniedComponent,
     AutocompleteDirective,
-    UsefulLinksComponent
+    UsefulLinksComponent,
+    DayScheduleComponent
+ 
     
 
     
@@ -85,6 +88,7 @@ import { UsefulLinksComponent } from './useful-links/useful-links.component';
     FlexLayoutModule,    
     MatTabsModule,
     MatTableModule,
+    MatCardModule,
     HttpClientModule,
     MatDialogModule,    
     MatFormFieldModule,

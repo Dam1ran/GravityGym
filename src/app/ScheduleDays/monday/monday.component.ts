@@ -47,8 +47,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {    
     Hour: "07:00",
     Practice: "CrossFit",    
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, architecto!`,
-    // thumbnail: "http://icons.iconarchive.com/icons/icons8/ios7/96/Sports-Dumbbell-icon.png"
+    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, architecto!`,    
     thumbnail: "https://localhost:44390/Upload/boxing-icon.png"
 
   },

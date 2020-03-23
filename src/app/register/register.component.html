@@ -68,6 +68,8 @@
     
             <button [disabled]="!registerForm.valid" mat-button type="submit">REGISTER</button>
 
+            <div *ngIf="!hasErrors && notification" class="elementToFadeInAndOut registered"><i class="fas fa-check-circle" ></i>{{notification}}</div>
+
             <div *ngIf="hasErrors" fxLayoutAlign="center center">    
                <mat-progress-spinner diameter="40" mode="indeterminate" strokeWidth="15"></mat-progress-spinner>    
             </div>

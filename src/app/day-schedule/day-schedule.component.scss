@@ -1,0 +1,136 @@
+table {
+    width: 100%;
+    background-color: transparent ;
+  }
+  
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: #777;
+    transition: 0.4s;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+  
+  th{
+    font-size: 20px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.4);    
+    background-color: rgba(157, 51, 172, 0.4);
+    color: black;
+    font-weight: 700;
+
+  }
+
+  .example-element-row td {
+    border-bottom-width: 0;
+    font-size: 20px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);    
+    color: rgb(255, 170, 50);
+
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .example-element-picture{
+    min-width: 96px;
+    min-height: 96px; 
+    margin: 8px 0;
+  }
+  
+
+.example-element-description {
+  padding: 18px;
+  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.6); 
+  letter-spacing: 0.5px;   
+
+}
+  
+button{
+    background-color: rgba(0,0,0,0.4);
+    color: rgb(255, 170, 50);
+    font-size: 16px;
+    text-shadow: 0 0 5px rgba(255,255,255,0.3);        
+}
+
+.deleteBtn{
+  margin-left: auto;
+  margin-right: 0;
+  font-size: 20px;
+  color: red;
+  background-color: rgba(0,0,0,0.3);
+}
+
+
+.adminRow{
+  background-color: rgba(200,50,200,0.4);
+  padding: 10px;
+}
+
+
+h3{
+    padding: 5px;
+    margin: 0;
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    display: block;
+    width: fit-content;
+    background-color: rgba(200,200,200,0.3);
+    border-radius: 5px;      
+
+}
+
+
+.practice{
+  width: 205px;
+  margin-right: 0;
+}
+
+// .description{
+//   width: 390px !important;
+// }
+
+textarea,input{
+    // text-align: center;
+    padding: 5px;
+    background-color: rgba(116, 79, 204, 0.4);
+    color: whitesmoke;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    border: none;
+    font-size: 18px; 
+    margin: 5px;    
+    border-radius: 5px;      
+    width: 390px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+.description{
+  resize: vertical;
+  width: 390px;
+  padding: 5px;
+  margin: 5px;    
+
+}
+
+.sendDiv{
+  width: 410px;
+}
+
+.time{
+  width: 100px;
+  
+}
+
+button{
+  padding: 0 30px;
+  margin-right: 5px;
+}

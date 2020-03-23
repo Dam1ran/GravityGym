@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, } from '@angular/common/http'
 import { WeekDay } from '@angular/common';
-import { IDaySchedule } from 'src/app/classes/DaySchedule'
+import { DaySchedule } from 'src/app/classes/DaySchedule'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class LoadScheduleService {
 
   constructor(private http: HttpClient) { }
 
-  GetSchedule(dayOfWeek: WeekDay) : Observable<IDaySchedule[]>
+  GetSchedule(dayOfWeek: WeekDay) : Observable<DaySchedule[]>
   {
     const endpoint: string = 'https://localhost:44390/api/Schedule';
     
@@ -20,7 +20,7 @@ export class LoadScheduleService {
     
     let params1 = new HttpParams().set('dayOfWeek',dayOfWeek.toString());
 
-    return this.http.get<IDaySchedule[]>(endpoint,{ headers: headers, params: params1 });
+    return this.http.get<DaySchedule[]>(endpoint,{ headers: headers, params: params1 });
 
   }
 

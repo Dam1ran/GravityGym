@@ -1,3 +1,13 @@
-.container{
-    width: 50%;
+.mat-tab-label{
+    background-color: rgba(0,0,0,0.2);
+    color: whitesmoke;
+    font-size: 20px;
+}
+
+.mat-tab-label-active {    
+     background-color: rgba(200,0,200,0.3);    
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: rgb(255, 170, 50);
 }
