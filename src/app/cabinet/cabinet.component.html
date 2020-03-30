@@ -28,27 +28,18 @@
 
         <mat-tab label="Personal Info">
             <ng-template matTabContent>
-                some shit about your majesty
+                <app-personal-info></app-personal-info>
             </ng-template>
         </mat-tab>
 
 
-        <mat-tab label="[Other] Optionals">
+        <mat-tab label="Manage Users" *ngIf="IsAdmin()">
             <ng-template matTabContent>
-                ROLE OPTIONS
+                <app-manage-users></app-manage-users>
             </ng-template>
         </mat-tab>
 
-        <!-- <mat-tab label="Manage Coaches">
-            <ng-template matTabContent>
-                Content 6 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
-            </ng-template>
-        </mat-tab>
-        <mat-tab label="Sunday">
-            <ng-template matTabContent>
-                Content 7 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
-            </ng-template>
-        </mat-tab> -->
+
     </mat-tab-group>
 
 

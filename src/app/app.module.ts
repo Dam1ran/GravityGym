@@ -15,7 +15,7 @@ import {
          MatTabsModule,
          MatTableModule,
          MatDialogModule,
-         MatLabel,         
+         MatSelectModule,         
          MatFormFieldModule,
          MatInputModule,
          MatProgressSpinner,         
@@ -44,6 +44,8 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { AutocompleteDirective } from './autocomplete.directive';
 import { UsefulLinksComponent } from './useful-links/useful-links.component';
 import { DayScheduleComponent } from './day-schedule/day-schedule.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 
 
@@ -69,7 +71,9 @@ import { DayScheduleComponent } from './day-schedule/day-schedule.component';
     AccessDeniedComponent,
     AutocompleteDirective,
     UsefulLinksComponent,
-    DayScheduleComponent
+    DayScheduleComponent,
+    PersonalInfoComponent,
+    ManageUsersComponent
  
     
 
@@ -94,6 +98,7 @@ import { DayScheduleComponent } from './day-schedule/day-schedule.component';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatSelectModule,
     ReactiveFormsModule   
     
   ],

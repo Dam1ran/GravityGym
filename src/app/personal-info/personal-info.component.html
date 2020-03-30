@@ -1,0 +1,149 @@
+<form  [formGroup]="personalInfoForm">
+    
+    <h3>Personal Info:</h3>
+
+
+    <div  fxLayout="row | wrap" fxLayoutAlign="center center" class="FLNameContainer mat-elevation-z12">
+
+        <mat-form-field class="FLName">
+            <input matInput placeholder="First Name" type="text" formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field class="FLName">
+            <input matInput placeholder="Last Name" type="text" formControlName="lastName" />
+        </mat-form-field>
+
+
+    </div>
+
+
+    <div  fxLayout="row | wrap" fxLayoutAlign="center center" >
+
+    
+
+    <div class="grpInputs mat-elevation-z12">
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-form-field class="smallInputs">
+
+                <mat-label>Gender</mat-label>
+
+                <mat-select required formControlName="gender">
+                    <mat-option>--</mat-option>
+
+                    <mat-option value='Male'>
+                        Male
+                    </mat-option>
+
+                    <mat-option value='Female'>
+                        Female
+                    </mat-option>
+
+                    <mat-option value='Other'>
+                        Other
+                    </mat-option>
+
+                </mat-select>
+
+                <mat-error *ngIf="personalInfoForm.controls['gender'].hasError('required')">Please choose your Gender
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="smallInputs">
+                <input matInput placeholder="Your Age" type="number" formControlName="age" />
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+
+            <mat-form-field class="smallInputs">
+                <input matInput placeholder="Your Height in CM" type="number" formControlName="heightInCm"
+                    (change)="onChange()" />
+            </mat-form-field>
+
+            <mat-form-field class="smallInputs">
+                <input matInput placeholder="Your Weight in KG" type="number" formControlName="weightInKg"
+                    (change)="onChange()" />
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+
+            <mat-form-field class="smallInputs">
+                <input matInput placeholder="Experience in Months" type="number"
+                    formControlName="fitnessExperienceInMonths" />
+            </mat-form-field>
+
+            <mat-form-field class="smallInputs">
+                <input matInput placeholder="BMI" type="number" formControlName="bmi" />
+            </mat-form-field>
+
+        </div>
+    </div>
+
+    <div class="grpInputs">
+        <p class="labels">Tell Us About Your Goals</p>
+        <mat-form-field class="txtArea">
+    
+            <textarea type="text" name="targetGoals" matInput placeholder="Goals" autocomplete="off"
+                formControlName="targetGoals" class="description">
+            </textarea>
+        </mat-form-field>
+    </div>
+    
+    </div>
+
+    
+    <div fxLayout="row" fxLayoutAlign="center center">
+
+    <div class="grpInputs  mat-elevation-z12" >
+        <p class="additionalInfo">Please Let Us Know if you any have Chronic Diseases or Heart related conditions</p>
+        <mat-form-field class="additionalInfo">
+            <textarea type="text" name="chronicDiseases" matInput placeholder="Chronic Diseases" autocomplete="off"
+                formControlName="chronicDiseases" class="description">
+            </textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+
+<div fxLayout="row" fxLayoutAlign="center center">
+
+    <div class="grpInputs  mat-elevation-z12">
+        <p class="additionalInfo">Please Let Us Know if you had Fractured Bones or Had Surgical Operations and When</p>
+        <mat-form-field class="additionalInfo">
+            <textarea type="text" name="operationsAndFractures" matInput placeholder="Operations And Fractures"
+                autocomplete="off" formControlName="operationsAndFractures" class="description">
+            </textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+
+    <div class="grpInputs  mat-elevation-z12">
+        <p class="additionalInfo">Please Mention Here Any Other Things that your Coach should Know</p>
+        <mat-form-field class="additionalInfo">
+            <textarea type="text" name="otherThingsThatYourCoachShouldKnow" matInput placeholder="Other Issues"
+                autocomplete="off" formControlName="otherThingsThatYourCoachShouldKnow" class="description">
+            </textarea>
+        </mat-form-field>
+    </div>
+    </div>
+   
+    <div fxLayout="row" fxLayoutAlign="center center">
+  
+        <div *ngIf="!hasErrors && notification" class="elementToFadeInAndOut updated"><i class="fas fa-check-circle" ></i>{{notification}}</div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+    <button [disabled]="!personalInfoForm.valid"  mat-button (click)="UpdatePersonalInfo()">
+      Save<i class="far fa-save"></i>
+    </button>
+    </div>
+
+
+</form>

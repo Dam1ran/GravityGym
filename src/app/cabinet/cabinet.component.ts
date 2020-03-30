@@ -16,4 +16,8 @@ export class CabinetComponent extends Fader implements OnInit {
     this.fade()
   }
 
+  IsAdmin(){
+    return this.auth.getUserRole() === "Admin" ? true : false; 
+  }
+
 }
