@@ -1,0 +1,55 @@
+.workouts{
+    max-width: 1000px;
+    min-height: 400px;
+    margin: 5px auto;     
+    ::ng-deep .mat-tab-label {
+        color: black;
+        text-shadow: 0 0 5px rgba(black,0.5);        
+        background-color: rgba(220,220,220,0.8);  
+    }
+    ::ng-deep .mat-tab-header-pagination{
+        background-color: rgba(220,220,220,0.8);  
+    }
+    span{
+        margin-left: 10px;
+    }
+    button{
+        margin: 5px;
+        color: rebeccapurple;
+        outline: none;
+        box-shadow: 0 0 5px black;
+        border-radius: 5px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        transition: 0.2s ease-in-out;
+    }
+    button:active{              
+        box-shadow: none;        
+    }
+    button:disabled{
+        color: grey;
+        box-shadow: none;        
+    }
+    .removeWorkout{
+        color: rgb(200,0,0);
+        text-shadow: 0 0 5px rgba(200,0,0,0.5);
+    }
+}
+.editContainer{
+    background-color: rgba(50,50,50,0.5);
+    margin-top: 5px;  
+
+}
+
+
+.addWorkoutTabSmall{    
+    ::ng-deep .mat-tab-labels :last-child.mat-tab-label {
+        min-width: 0;
+        max-width: 100%;        
+        padding: 0 12px;
+        color: unset;
+        opacity: unset;        
+        flex: none;
+    }
+}

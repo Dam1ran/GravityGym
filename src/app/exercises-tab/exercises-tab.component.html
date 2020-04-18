@@ -1,0 +1,116 @@
+<div [formGroup]="searchField" fxLayout="row | wrap" fxLayoutAlign="center center" class="toolbar">
+
+    <mat-form-field class="search">
+        <input matInput placeholder="Search"  type="text" formControlName="search" (keyup.enter)="HandleSearch()"/>
+    </mat-form-field>
+    
+    <mat-paginator
+    
+        #paginator
+        [length]="totalSize"
+        [pageSize]="pageSize"
+        [showFirstLastButtons]="true"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+        (page)="pageEvent = handlePage($event)">
+        
+    </mat-paginator>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="Comments">
+      <th mat-header-cell *matHeaderCellDef> Comments </th>
+      <td mat-cell *matCellDef="let element" class="comm"> {{element.comments}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="Tempo">
+      <th mat-header-cell *matHeaderCellDef> Tempo </th>
+      <td mat-cell *matCellDef="let element"> {{element.tempo}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="PrimaryMuscleId">
+      <th mat-header-cell *matHeaderCellDef> Primary Muscle </th>
+      <td mat-cell *matCellDef="let element"> {{ GetMuscleById(element.primaryMuscleId)?.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="SecondaryMuscleId">
+        <th mat-header-cell *matHeaderCellDef> Secondary Muscle </th>
+        <td mat-cell *matCellDef="let element"> {{ GetMuscleById(element.secondaryMuscleId)?.name }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef > Actions </th>
+        <td mat-cell *matCellDef="let element">
+            
+            <button mat-button (click)="deleteExerciseTemplate(element.id)">
+                <i class="far fa-trash-alt"></i>
+            </button>
+
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+<form [formGroup]="AddExerciseTemplateForm" class="addETForm mat-elevation-z15" (ngSubmit)="SubmitExerciseTemplate()">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="inputs">
+    
+        <mat-form-field class="name">
+
+            <input matInput formControlName="name" placeholder="Name" />
+
+        </mat-form-field>
+
+        <mat-form-field class="comments">
+
+            <input matInput formControlName="comments" placeholder="Comments" />
+
+        </mat-form-field>
+
+        <mat-form-field  class="tempo">
+
+            <input matInput formControlName="tempo" placeholder="Tempo"/>
+
+        </mat-form-field>
+
+        <mat-form-field class="primaryMuscle">
+
+            <mat-select formControlName="primaryMuscleId">
+
+                <mat-option [value]="0">-- Primary Muscle --</mat-option>
+                <mat-option *ngFor="let muscle of musclesDTOs" [value]="muscle.id">{{muscle.name}}</mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field class="secondaryMuscle">
+
+            <mat-select formControlName="secondaryMuscleId">
+
+                <mat-option [value]="0">-- Secondary Muscle --</mat-option>
+                <mat-option *ngFor="let muscle of musclesDTOs" [value]="muscle.id">{{muscle.name}}</mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+    
+    </div>
+
+    <button mat-button title="Save Exercise Template" [disabled]="!AddExerciseTemplateForm.valid" type="submit">
+        <i class="far fa-save"></i>
+    </button>
+
+</form>

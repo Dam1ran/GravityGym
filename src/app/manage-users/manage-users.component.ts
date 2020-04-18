@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CabinetService } from '../Services/cabinet.service';
 import { GetUserRequest } from '../classes/GetUserRequest';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { UserDTO } from '../classes/UserDTO';
+import { AppUserDTO } from '../classes/AppUserDTO';
 import { CoachDTO } from '../classes/CoachDTO';
 import { SaveUserRoleDTO } from '../classes/SaveUserRoleDTO';
 import { ActionCoachDTO } from '../classes/ActionCoachDTO';
@@ -17,7 +17,7 @@ export class ManageUsersComponent implements OnInit {
   public userRequest = new GetUserRequest(null,1,2);
   public numberOfPages: number;
   public searchUsersForm : FormGroup; 
-  private userDTOs: UserDTO[];
+  private userDTOs: AppUserDTO[];
   private coachesDTOs: CoachDTO[];
   public nextDisabled: boolean;
   public previousDisabled: boolean;
@@ -109,7 +109,7 @@ export class ManageUsersComponent implements OnInit {
     .subscribe(
       res=>
       {
-        this.userDTOs = res.userDTOs;       
+        this.userDTOs = res.appUserDTOs;
         this.numberOfPages = res.numberOfPages;        
         this.nextDisabled = this.numberOfPages==1 || this.searchUsersForm.controls['page'].value == this.numberOfPages;
         this.previousDisabled = this.searchUsersForm.controls['page'].value == 1;

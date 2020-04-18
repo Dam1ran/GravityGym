@@ -87,7 +87,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "GravityGym:build"
+            "browserTarget": "GravityGym:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

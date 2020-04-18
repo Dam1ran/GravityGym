@@ -29,8 +29,6 @@ export class UpperToolbarComponent extends Fader implements OnInit {
   
 
   openDialog(): void {
-
-    //const dialogRef = 
     this.dialog.open(
       LoginDialogComponent,
       { 
@@ -39,11 +37,6 @@ export class UpperToolbarComponent extends Fader implements OnInit {
       }
       
     );
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   // this.animal = result;
-    // });
   }
 
 

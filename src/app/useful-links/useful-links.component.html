@@ -26,8 +26,8 @@
 </mat-list>
 
 
-<form [formGroup]="usefulLinkForm">
-    <div *ngIf="isAdminRole" class="rowElement adminRow" fxLayout="row" fxLayoutAlign="center center" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap>
+<form [formGroup]="usefulLinkForm" *ngIf="isCoachRole">
+    <div  class="rowElement adminRow" fxLayout="row" fxLayoutAlign="center center" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap>
 
         <h3>Add new Link:</h3>
 

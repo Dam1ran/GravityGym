@@ -1,0 +1,11 @@
+<div class="modalbox">
+
+    <div mat-dialog-content class="msg">
+        {{message}}
+    </div>
+    <div mat-dialog-actions class="actions" fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button [mat-dialog-close]="true" >Yes</button>
+        <button mat-button (click)="onNoClick()" cdkFocusInitial>No</button>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+<div class="workouts">
+
+   <mat-tab-group mat-stretch-tabs [ngClass] ="{'addWorkoutTabSmall': numberOfWorkouts > 0}"  #tabs>
+
+        <!-- <mat-tab *ngFor="let number of createRange(numberOfWorkouts)" label="Workout No. {{number+1}}" >     
+        
+            <ng-template matTabContent>                
+
+                <app-workout-edit [routineId]="routine.id" [woNumber]="number" [workout]="GetWorkout( number )" ></app-workout-edit>
+
+            </ng-template>
+
+        </mat-tab> -->
+
+        <mat-tab *ngFor="let workout of workouts" label="Workout No. {{workout.order+1}}" >     
+        
+            <ng-template matTabContent>                
+
+                <app-workout-edit [workoutInput]="workout"></app-workout-edit>
+
+            </ng-template>
+
+        </mat-tab>
+
+
+        <mat-tab disabled >
+            <ng-template mat-tab-label>
+                <button mat-icon-button (click)="AddWorkout()" title="Add a Workout" [disabled]="numberOfWorkouts===14">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+                <span *ngIf="numberOfWorkouts===0">Add a Workout</span>
+
+                <button class="removeWorkout" *ngIf="numberOfWorkouts>0" mat-icon-button title="Remove Last Workout" (click)="RemoveLastWorkoutDialog()">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+            </ng-template>
+        </mat-tab>        
+       
+   </mat-tab-group>
+
+
+</div>

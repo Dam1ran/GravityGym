@@ -20,4 +20,12 @@ export class CabinetComponent extends Fader implements OnInit {
     return this.auth.getUserRole() === "Admin" ? true : false; 
   }
 
+  IsCoach(){
+    return this.auth.getUserRole() === "Coach" ? true : false; 
+  }
+
+  IsClient(){
+    return this.auth.getUserRole() === "Client" ? true : false; 
+  }
+
 }

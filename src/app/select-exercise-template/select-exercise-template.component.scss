@@ -1,0 +1,22 @@
+.is-loading{
+    mat-progress-spinner{
+        margin: auto;
+    }
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 310px;
+    width: 100%;
+}
+  
+.example-full-width {
+    width: 100%;
+}
+
+.noResults{
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.5);
+    color: rgb(255,170,50);
+    padding: 5px;
+}

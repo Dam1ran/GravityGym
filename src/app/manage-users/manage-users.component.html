@@ -47,18 +47,6 @@
             
     </div>
 
-    <!-- <div fxLayout="row" class="searchHeader" fxLayoutAlign="center center">               -->
-
-        <!-- <mat-form-field class="search">
-            <input matInput placeholder="Search"  type="text" formControlName="filter" (keyup.enter)="Search()"/>
-        </mat-form-field>
-
-        <button mat-fab (click)="Search()" [disabled]="!searchUsersForm.valid">
-            <i class="fas fa-search"></i>
-        </button> -->
-
-    <!-- </div> -->
-
 </form>
 
 
@@ -104,7 +92,7 @@
         
             <mat-form-field class="userData userRole" >
         
-                <mat-select [value]="userDTO.userRole" (selectionChange)="onSelectionRoleChange($event, userDTO.userRole,i)" [(value)]="selectedRole">
+                <mat-select [value]="userDTO.userRoleId" (selectionChange)="onSelectionRoleChange($event, userDTO.userRoleId,i)" [(value)]="selectedRole">
         
                     <mat-option [value]="1">Client</mat-option>
                     <mat-option [value]="2">Coach</mat-option>

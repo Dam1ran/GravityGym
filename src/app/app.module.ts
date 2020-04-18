@@ -19,7 +19,12 @@ import {
          MatFormFieldModule,
          MatInputModule,
          MatProgressSpinner,         
-         MatCardModule
+         MatCardModule,
+         MatPaginatorModule,
+         MatExpansionModule,
+         MatSnackBarModule,
+         MatAutocompleteModule,
+         MatSlideToggleModule
                 
         }
          from "@angular/material";
@@ -46,6 +51,15 @@ import { UsefulLinksComponent } from './useful-links/useful-links.component';
 import { DayScheduleComponent } from './day-schedule/day-schedule.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManageClientsComponent } from './manage-clients/manage-clients.component';
+import { ExercisesTabComponent } from './exercises-tab/exercises-tab.component';
+import { WorkoutTabComponent } from './workout-tab/workout-tab.component';
+import { WorkoutEditComponent } from './workout-edit/workout-edit.component';
+import { WorkoutRoutineEditComponent } from './workout-routine-edit/workout-routine-edit.component';
+import { WORoutineDescriptionComponent } from './woroutine-description/woroutine-description.component';
+import { RollingPipe } from './rolling.pipe';
+import { SelectExerciseTemplateComponent } from './select-exercise-template/select-exercise-template.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 
 
@@ -73,7 +87,16 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     UsefulLinksComponent,
     DayScheduleComponent,
     PersonalInfoComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    ManageClientsComponent,
+    ExercisesTabComponent,
+    WorkoutTabComponent,
+    WorkoutEditComponent,
+    WorkoutRoutineEditComponent,
+    WORoutineDescriptionComponent,
+    RollingPipe,
+    SelectExerciseTemplateComponent,
+    ConfirmationDialogComponent
  
     
 
@@ -99,10 +122,15 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     MatInputModule,
     FormsModule,
     MatSelectModule,
-    ReactiveFormsModule   
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatSlideToggleModule    
     
   ],
-  entryComponents: [LoginDialogComponent],
+  entryComponents: [LoginDialogComponent,ConfirmationDialogComponent],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })

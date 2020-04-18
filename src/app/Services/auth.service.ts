@@ -10,6 +10,8 @@ import { delay } from 'rxjs/operators';
 })
 export class AuthService {
 
+  account: string = "/api/account/";
+
   constructor(private http: HttpClient) { }
 
   isLoggedIn(): boolean{
@@ -27,19 +29,19 @@ export class AuthService {
 
   login(credentials) : Observable<BearerToken> {
 
-    return this.http.post<BearerToken>('https://localhost:44390/api/account/login',credentials);
+    return this.http.post<BearerToken>(this.account+'login',credentials);
      
   }
 
   register(credentials) {
 
-    return this.http.post('https://localhost:44390/api/account/register',credentials);
+    return this.http.post(this.account+'register',credentials);
      
   }
 
   isNameTaken(name:string) : Observable<any>{
         
-    return this.http.post('https://localhost:44390/api/account/checkname',{'userName':name});
+    return this.http.post(this.account+'checkname',{'userName':name});
 
   }
 

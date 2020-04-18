@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { interval, BehaviorSubject, from, Scheduler, of } from 'rxjs';
+import { timeInterval, timeout, map, delay, concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-about',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
+
+  ziu = from("abcdefuck");
+  foo = from("asdasdas");
+  fiu: string = '';
+
   constructor() { }
 
   ngOnInit() {
+    this.ziu.pipe(
+      concatMap(i => of(i).pipe(delay(200))),
+    )
+    .subscribe(
+        value => {
+          
+            this.fiu += value;
+          
+        },
+        err => console.log(err),
+    );
   }
 
 }

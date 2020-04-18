@@ -75,9 +75,12 @@ export class PersonalInfoComponent implements OnInit {
       res=>
       {
         this.hasErrors = false;
-        this.notification = 'Saved!'
+        this.notification = 'Saved!';
         this.personalInfoForm.disable();    
         setTimeout(()=>{this.notification=null;},2000);    
+      },
+      err=>{
+        console.log(err.error.title);
       }
     )
   }

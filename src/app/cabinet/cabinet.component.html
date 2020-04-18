@@ -4,14 +4,26 @@
 <div [ngClass] ="{'fade': fadeIt, 'container': true}" >
 
     <mat-tab-group mat-stretch-tabs>
-        <mat-tab label="My Workouts">
+
+        <mat-tab label="My Workouts" *ngIf="IsClient()">
             <ng-template matTabContent>
                 Ma workouts                
             </ng-template>
         </mat-tab>
 
+        <mat-tab label="Workouts" *ngIf="IsCoach()">
+            <ng-template matTabContent>
+                <app-workout-tab></app-workout-tab>
+            </ng-template>
+        </mat-tab>
 
-        <mat-tab label="Progress Log">
+        <mat-tab label="Exercises" *ngIf="IsCoach()">
+            <ng-template matTabContent>
+                <app-exercises-tab></app-exercises-tab>
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Progress Log" *ngIf="IsClient()">
             <ng-template matTabContent>
                 track your shit here
             </ng-template>
@@ -24,7 +36,11 @@
             </ng-template>
         </mat-tab>
 
-                
+        <mat-tab label="Manage Clients" *ngIf="IsCoach()">
+            <ng-template matTabContent>
+                <app-manage-clients></app-manage-clients>
+            </ng-template>
+        </mat-tab>        
 
         <mat-tab label="Personal Info">
             <ng-template matTabContent>
@@ -38,7 +54,6 @@
                 <app-manage-users></app-manage-users>
             </ng-template>
         </mat-tab>
-
 
     </mat-tab-group>
 

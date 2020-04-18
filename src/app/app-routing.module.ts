@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'OurTeam', component: OurTeamComponent },  
   {path: 'AccessDenied', component: AccessDeniedComponent },  
   {path: 'Cabinet', component: CabinetComponent, canActivate: [AuthGuardService] },  
-  {path: '', redirectTo: '/MainPage', pathMatch: 'full' }  
+  {path: '**', redirectTo: '/MainPage', pathMatch: 'full' }  
 ];
 
 @NgModule({

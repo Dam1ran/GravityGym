@@ -19,13 +19,13 @@ export class UsefulLinksComponent implements OnInit {
 
   public usefulLinkForm : FormGroup;
   public usefulLinks: UsefulLink[];
-  private isAdminRole: boolean;
+  private isCoachRole: boolean;
 
   ngOnInit() {
     
     this.Refresh();
 
-    this.isAdminRole=this.authService.getUserRole() === "Admin" ? true : false;
+    this.isCoachRole=this.authService.getUserRole() === "Coach" ? true : false;
 
     this.usefulLinkForm = this.fb.group({
       link: ['',[Validators.required]],
@@ -40,8 +40,7 @@ export class UsefulLinksComponent implements OnInit {
     .subscribe
     (
       res=>
-      {
-        // console.log(res);
+      {       
         this.Refresh();
       }
 
@@ -56,8 +55,7 @@ export class UsefulLinksComponent implements OnInit {
     (
       res=>
       {
-        this.usefulLinks = res;
-        // console.log(res);
+        this.usefulLinks = res;        
       },
       err=>{console.log(err)},
 

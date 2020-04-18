@@ -1,0 +1,30 @@
+.modalbox{
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    overflow: hidden;
+    margin: auto;
+    text-align: center;
+    background-image: linear-gradient(white,rgb(40, 21, 71));
+    border: 1px solid rgb(40, 21, 71);
+    border-bottom: 3px solid rgb(255,170,50);
+    box-shadow: 0 0 5px black;
+    border-radius: 3px;
+    .msg{
+        text-shadow: 0 0 5px black;
+        font-size: 18px;
+    }
+    .actions{
+        width: 80%;
+        margin: auto;
+        padding-bottom: 5px;
+        :first-child{
+            color: rgb(200,0,0);
+        }
+        button{
+            text-shadow: 0 0 15px rgba(255,255,255,0.7);
+            width: 40%;
+            font-size: 18px;
+        }
+    }
+}

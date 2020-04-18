@@ -1,0 +1,33 @@
+
+<form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Exercise" aria-label="Exercise" [matAutocomplete]="auto" [formControl]="etdCtrl">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngIf="isLoading" class="is-loading"><mat-progress-spinner diameter="40" mode="indeterminate" strokeWidth="10"></mat-progress-spinner></mat-option>
+            <ng-container *ngIf="!isLoading">
+
+                <mat-option *ngFor="let etd of filteredETDTOs" [value]="etd">              
+                    <span>{{etd.name}}</span> |
+                    <small>Desc: {{etd.comments}}</small>
+                </mat-option>
+
+              </ng-container>
+
+          </mat-autocomplete> 
+
+          
+        </mat-form-field>
+        
+        <span *ngIf="noResults" class="noResults">No Results</span>
+
+        <br>
+      
+        <!-- <mat-slide-toggle
+          [checked]="etdCtrl.disabled"
+          (change)="etdCtrl.disabled ? etdCtrl.enable() : etdCtrl.disable()">
+          Disable Input?
+        </mat-slide-toggle>-->
+        
+    <span>Exercise Choosen: {{exerciseChoosen}}</span>
+
+</form>
