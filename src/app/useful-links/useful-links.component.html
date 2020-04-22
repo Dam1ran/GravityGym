@@ -5,7 +5,7 @@
 
                 <div class="buttons mat-elevation-z8">   
                     
-                    <a mat-button *ngIf="isAdminRole" (click)="onDelete(link.id)"><i class="far fa-trash-alt"></i></a>
+                    <a mat-button *ngIf="isCoachRole" (click)="onDelete(link.id)"><i class="far fa-trash-alt"></i></a>
 
                     <a target="_blank" href="{{ link.link }}" mat-button >Visit Link</a>
 

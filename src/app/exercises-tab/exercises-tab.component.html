@@ -1,116 +1,88 @@
-<div [formGroup]="searchField" fxLayout="row | wrap" fxLayoutAlign="center center" class="toolbar">
+<p>Create Exercise Templates</p>
 
-    <mat-form-field class="search">
-        <input matInput placeholder="Search"  type="text" formControlName="search" (keyup.enter)="HandleSearch()"/>
-    </mat-form-field>
-    
-    <mat-paginator
-    
-        #paginator
-        [length]="totalSize"
-        [pageSize]="pageSize"
-        [showFirstLastButtons]="true"
-        [pageSizeOptions]="[10, 25, 50, 100]"
-        (page)="pageEvent = handlePage($event)">
-        
-    </mat-paginator>
+<div class="controls">
+    <div fxLayout="row" fxLayoutAlign="space-between center"> 
+        <mat-form-field class="searchField">
+            <mat-placeholder>
+                <mat-icon>subject</mat-icon>
+                <b> Search</b>
+            </mat-placeholder>
+            <input matInput [formControl]="searchInput" (keyup.enter)="applySearch()" class="searchInput">
+        </mat-form-field>
+        <mat-progress-spinner *ngIf="isLoading" diameter="35" mode="indeterminate" strokeWidth="6"></mat-progress-spinner>    
+        <mat-paginator [length]="pagedExerciseTemplates?.total" [pageSizeOptions]="[5, 10, 25, 50]" pageSize="5" [showFirstLastButtons]="true"></mat-paginator>            
+   </div>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+<div class="filterContainer">
+    <div class="filter">
+    <mat-accordion class="accordion">
+        <mat-expansion-panel [(expanded)]="panelOpenState">
 
-    
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Search Filters</mat-panel-title>
+            </mat-expansion-panel-header>
 
-    
-    <ng-container matColumnDef="Comments">
-      <th mat-header-cell *matHeaderCellDef> Comments </th>
-      <td mat-cell *matCellDef="let element" class="comm"> {{element.comments}} </td>
-    </ng-container>
+            <form [formGroup]="filterForm">
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Name" formControlName="name" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Comments" formControlName="comments" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Primary Muscle" formControlName="primaryMuscle" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Secondary Muscle" formControlName="secondaryMuscle" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+            </form>
 
-    
-    <ng-container matColumnDef="Tempo">
-      <th mat-header-cell *matHeaderCellDef> Tempo </th>
-      <td mat-cell *matCellDef="let element"> {{element.tempo}} </td>
-    </ng-container>
-
-    
-    <ng-container matColumnDef="PrimaryMuscleId">
-      <th mat-header-cell *matHeaderCellDef> Primary Muscle </th>
-      <td mat-cell *matCellDef="let element"> {{ GetMuscleById(element.primaryMuscleId)?.name }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="SecondaryMuscleId">
-        <th mat-header-cell *matHeaderCellDef> Secondary Muscle </th>
-        <td mat-cell *matCellDef="let element"> {{ GetMuscleById(element.secondaryMuscleId)?.name }} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef > Actions </th>
-        <td mat-cell *matCellDef="let element">
-            
-            <button mat-button (click)="deleteExerciseTemplate(element.id)">
-                <i class="far fa-trash-alt"></i>
-            </button>
-
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-<form [formGroup]="AddExerciseTemplateForm" class="addETForm mat-elevation-z15" (ngSubmit)="SubmitExerciseTemplate()">
-
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="inputs">
-    
-        <mat-form-field class="name">
-
-            <input matInput formControlName="name" placeholder="Name" />
-
-        </mat-form-field>
-
-        <mat-form-field class="comments">
-
-            <input matInput formControlName="comments" placeholder="Comments" />
-
-        </mat-form-field>
-
-        <mat-form-field  class="tempo">
-
-            <input matInput formControlName="tempo" placeholder="Tempo"/>
-
-        </mat-form-field>
-
-        <mat-form-field class="primaryMuscle">
-
-            <mat-select formControlName="primaryMuscleId">
-
-                <mat-option [value]="0">-- Primary Muscle --</mat-option>
-                <mat-option *ngFor="let muscle of musclesDTOs" [value]="muscle.id">{{muscle.name}}</mat-option>
-
-            </mat-select>
-
-        </mat-form-field>
-
-        <mat-form-field class="secondaryMuscle">
-
-            <mat-select formControlName="secondaryMuscleId">
-
-                <mat-option [value]="0">-- Secondary Muscle --</mat-option>
-                <mat-option *ngFor="let muscle of musclesDTOs" [value]="muscle.id">{{muscle.name}}</mat-option>
-
-            </mat-select>
-
-        </mat-form-field>
-    
+        </mat-expansion-panel>
+    </mat-accordion>
     </div>
+</div>
 
-    <button mat-button title="Save Exercise Template" [disabled]="!AddExerciseTemplateForm.valid" type="submit">
-        <i class="far fa-save"></i>
-    </button>
+<mat-table #table [dataSource]="pagedExerciseTemplates?.items" matSort matSortActive="name" matSortDirection="asc">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Exercise Name </mat-header-cell>
+        <mat-cell *matCellDef="let exercisetemplate"> {{exercisetemplate.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="comments">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Comments </mat-header-cell>
+        <mat-cell *matCellDef="let exercisetemplate"> {{exercisetemplate.comments}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="tempo">
+        <mat-header-cell *matHeaderCellDef> Tempo </mat-header-cell>
+        <mat-cell *matCellDef="let exercisetemplate"> {{exercisetemplate.tempo}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="primaryMuscle">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Primary Muscle </mat-header-cell>
+        <mat-cell *matCellDef="let exercisetemplate"> {{exercisetemplate.primaryMuscle}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="secondaryMuscle">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Secondary Muscle </mat-header-cell>
+        <mat-cell *matCellDef="let exercisetemplate"> {{exercisetemplate.secondaryMuscle}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+            <button class="refresh" (click)="AddExerciseTemplate()" matTooltip="Add Exercise Template" [matTooltipShowDelay]="1000">
+                <i class="fas fa-plus-circle"></i>
+            </button> 
+            <button class="refresh" (click)="refresh()" matTooltip="Refresh Table" [matTooltipShowDelay]="1000">
+                <i class="fas fa-sync-alt"></i>
+            </button> 
+        </mat-header-cell>
+        <mat-cell *matCellDef="let exercisetemplate">
+            <button class="edit" (click)="editExerciseTemplateDialog(exercisetemplate.id)" matTooltip="Edit Exercise Template" [matTooltipShowDelay]="1000">
+                <i class="far fa-edit"></i>
+            </button> 
+            <button class="delete" (click)="deleteExerciseTemplateDialog(exercisetemplate.id)" matTooltip="Delete  Exercise Template" [matTooltipShowDelay]="1000">
+                <i class="far fa-trash-alt"></i>
+            </button> 
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-</form>
+</mat-table>

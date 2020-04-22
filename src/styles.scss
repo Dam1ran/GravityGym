@@ -10,6 +10,7 @@ body{
 }
 
 .custom-modalbox {
+    max-width: 100vw !important;
     mat-dialog-container {
         padding: 5px;
     }

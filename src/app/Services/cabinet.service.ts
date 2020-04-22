@@ -12,6 +12,8 @@ import { ExerciseTemplateDTOResponse } from '../classes/ExerciseTemplateDTORespo
 import { MuscleDTO } from '../classes/MuscleDTO';
 import { WoRoutineDTO } from '../classes/WORoutine/WoRoutineDTO';
 import { WorkoutDTO } from '../classes/WORoutine/WorkoutDTO';
+import { PaginatedRequest } from '../classes/PageModels/PaginatedRequest';
+import { PaginatedResult } from '../classes/PageModels/PaginatedResult';
 
 
 @Injectable({
@@ -79,11 +81,17 @@ export class CabinetService {
     return this.http.get<ClientDTO[]>(endpoint);
   }
 
-  public GetExerciseTemplates(data: GetExerciseTemplateRequest) : Observable<ExerciseTemplateDTOResponse>
+  public GetExerciseTemplatesT(data: GetExerciseTemplateRequest) : Observable<ExerciseTemplateDTOResponse>
   {
     const endpoint: string = this.cabinet+'getexercisetemplates';
 
     return this.http.post<ExerciseTemplateDTOResponse>(endpoint,data);
+  }
+
+  public GetExerciseTemplates(paginatedRequest: PaginatedRequest): Observable<PaginatedResult<ExerciseTemplateDTO>> {
+
+    return this.http.post<PaginatedResult<ExerciseTemplateDTO>>(this.cabinet + 'getexercisetemplates', paginatedRequest);
+
   }
 
   public GetMusclesList() : Observable<MuscleDTO[]>

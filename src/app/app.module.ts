@@ -24,7 +24,10 @@ import {
          MatExpansionModule,
          MatSnackBarModule,
          MatAutocompleteModule,
-         MatSlideToggleModule
+         MatSlideToggleModule,
+         MatSortModule,
+         MatTooltipModule,
+         MatMenuModule
                 
         }
          from "@angular/material";
@@ -60,6 +63,7 @@ import { WORoutineDescriptionComponent } from './woroutine-description/woroutine
 import { RollingPipe } from './rolling.pipe';
 import { SelectExerciseTemplateComponent } from './select-exercise-template/select-exercise-template.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { ExerciseTemplateDialogComponent } from './exercises-tab/exercise-template-dialog/exercise-template-dialog.component';
 
 
 
@@ -96,7 +100,8 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
     WORoutineDescriptionComponent,
     RollingPipe,
     SelectExerciseTemplateComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ExerciseTemplateDialogComponent,
  
     
 
@@ -127,10 +132,13 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
     MatExpansionModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatSlideToggleModule    
+    MatSlideToggleModule,
+    MatSortModule,
+    MatTooltipModule,
+    MatMenuModule
     
   ],
-  entryComponents: [LoginDialogComponent,ConfirmationDialogComponent],
+  entryComponents: [LoginDialogComponent,ConfirmationDialogComponent,ExerciseTemplateDialogComponent],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })

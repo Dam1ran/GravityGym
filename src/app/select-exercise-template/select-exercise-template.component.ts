@@ -28,7 +28,7 @@ export class SelectExerciseTemplateComponent implements OnInit {
       distinctUntilChanged(),
       filter(x=>!this.existsByName(x.name)),
       tap(()=>this.isLoading=true),          
-      switchMap(text=>this.cabinet.GetExerciseTemplates(new GetExerciseTemplateRequest(text.name?text.name:text,1,20)).pipe(finalize(()=>this.isLoading=false))
+      switchMap(text=>this.cabinet.GetExerciseTemplatesT(new GetExerciseTemplateRequest(text.name?text.name:text,1,20)).pipe(finalize(()=>this.isLoading=false))
       .pipe(finalize(() => this.isLoading = false)))          
       )
       .subscribe(

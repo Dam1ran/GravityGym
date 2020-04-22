@@ -7,9 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PricesComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    
   }
 
 }

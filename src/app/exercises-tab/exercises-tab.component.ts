@@ -1,130 +1,196 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PageEvent, MatPaginator, MatTableDataSource } from '@angular/material';
-import { CabinetService } from '../Services/cabinet.service';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { PaginatedResult } from '../classes/PageModels/PaginatedResult';
 import { ExerciseTemplateDTO } from '../classes/ExerciseTemplateDTO';
-import { GetExerciseTemplateRequest } from '../classes/GetExerciseTemplateRequest';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MuscleDTO } from '../classes/MuscleDTO';
+import { TableColumn } from '../classes/PageModels/TableColumn';
+import { MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { CabinetService } from '../Services/cabinet.service';
+import { PaginatedRequest } from '../classes/PageModels/PaginatedRequest';
+import { RequestFilters } from '../classes/PageModels/RequestFilters';
+import { FilterLogicalOperators } from '../classes/PageModels/FilterLogicalOperators';
+import { merge } from 'rxjs';
+import { Filter } from '../classes/PageModels/Filter';
+import { ExerciseTemplateDialogComponent } from '../exercises-tab/exercise-template-dialog/exercise-template-dialog.component';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-exercises-tab',
   templateUrl: './exercises-tab.component.html',
   styleUrls: ['./exercises-tab.component.scss']
 })
-export class ExercisesTabComponent implements OnInit {
+export class ExercisesTabComponent implements AfterViewInit {
 
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false}) sort: MatSort;
+  isLoading=true;
+  pagedExerciseTemplates: PaginatedResult<ExerciseTemplateDTO>;
+  tableColumns: TableColumn[] = [
+    { name: 'name', index: 'name', displayName: 'Name', useInSearch: true },
+    { name: 'comments', index: 'comments', displayName: 'Comments', useInSearch: true },
+    { name: 'tempo', index: 'tempo', displayName: 'Tempo' },
+    { name: 'primaryMuscle', index: 'primaryMuscle', displayName: 'Primary Muscle' },
+    { name: 'secondaryMuscle', index: 'secondaryMuscle', displayName: 'Secondary Muscle' },
+    { name: 'actions', index: 'actions', displayName: 'Actions' }
+  ];
+  displayedColumns: string[];
 
-  public searchField : FormGroup; 
-  public AddExerciseTemplateForm : FormGroup; 
-
-
-  private exerciseTemplateDTOs: ExerciseTemplateDTO[];  
-  private musclesDTOs: MuscleDTO[];  
+  requestFilters: RequestFilters;
   
-  public pageSize = 10;
-  public currentPage = 1;
-  public totalSize = 0;
-  pageEvent: PageEvent;
-  
-  getExerciseTemplateRequest = new GetExerciseTemplateRequest('',1,this.pageSize);
+  searchInput = new FormControl('');
+  filterForm: FormGroup;
+  panelOpenState = false;
 
-  
-  @ViewChild(MatPaginator , {static: true}) paginator: MatPaginator;
-
-  public dataSource; 
-  displayedColumns: string[] = ['name', 'Comments', 'Tempo', 'PrimaryMuscleId', 'SecondaryMuscleId', 'Action'];
-
-  constructor(
+  constructor
+  (
     private cabinetService: CabinetService,
-    private fb: FormBuilder
-  ) { }
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
 
-  ngOnInit() {
-    this.searchField = this.fb.group({      
-      search:    ['']      
+  )
+  {
+    this.displayedColumns = this.tableColumns.map(column => column.name);
+    this.filterForm = this.formBuilder.group({
+      name: [''],
+      comments: [''],
+      primaryMuscle: [''],
+      secondaryMuscle: ['']
+    });
+  }
+
+
+  ngAfterViewInit() {
+    this.LoadExercises();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
+      this.LoadExercises();
     });
 
-    this.AddExerciseTemplateForm = this.fb.group({      
-      name:    [null,[Validators.required,Validators.minLength(4),Validators.maxLength(100)]],
-      comments: [null,[Validators.maxLength(200)]],
-      tempo: [null,[Validators.maxLength(10)]],
-      primaryMuscleId: [0],
-      secondaryMuscleId: [0]
-    });
+  }
 
-
-    this.cabinetService.GetMusclesList()
+  LoadExercises(){
+    this.isLoading=true;
+    const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
+    this.cabinetService.GetExerciseTemplates(paginatedRequest)
     .subscribe(
       res=>{
-        this.musclesDTOs = res;
-      }
-    );
-    this.GetData();   
-  }
-
-  public handlePage(e?: PageEvent) {
-    this.currentPage = e.pageIndex;
-    this.pageSize = e.pageSize;
-    this.getExerciseTemplateRequest.page = 1+this.currentPage;
-    this.getExerciseTemplateRequest.pageSize = this.pageSize;        
-    this.GetData();        
-    return e;
-  }
-
-  public HandleSearch(){
-    this.getExerciseTemplateRequest.filter = this.searchField.controls['search'].value;
-    this.getExerciseTemplateRequest.page = 1;
-    this.getExerciseTemplateRequest.pageSize = this.pageSize;
-    this.GetData();
-  }
-
-
-  GetData(){
-    this.exerciseTemplateDTOs=[];
-    this.cabinetService.GetExerciseTemplates(this.getExerciseTemplateRequest)
-    .subscribe(
-      res=> {        
-        this.exerciseTemplateDTOs = res.exerciseTemplateDTOs;
-        this.currentPage = res.pageIndex;
-        this.totalSize = res.length;
-        this.pageSize = res.pageSize;
-        this.dataSource = new MatTableDataSource<ExerciseTemplateDTO>(this.exerciseTemplateDTOs);        
-      }
+        this.pagedExerciseTemplates = res;
+        this.isLoading=false;        
+      },
+      err=>{console.log(err);}
     );
   }
 
-  GetMuscleById(id: number){
+  refresh() {
+    this.requestFilters = {filters: [], logicalOperator: FilterLogicalOperators.And};
+    this.panelOpenState = false;
+    this.filterForm.reset();
+    this.LoadExercises();
+  }
 
-    let muscle = this.musclesDTOs.find(x=>x.id==id);
-    
-    return muscle;
+  applySearch() {
+    this.createFiltersFromSearchInput();
+    this.panelOpenState = false;
+    this.LoadExercises();
+  }
+  
+  private createFiltersFromSearchInput() {
+    const filterValue = this.searchInput.value.trim();
+    if (filterValue) {
+      const filters: Filter[] = [];
+      this.tableColumns.forEach(column => {
+        if (column.useInSearch) {
+          const filter: Filter = { path : column.index, value : filterValue };
+          filters.push(filter);
+        }
+      });
+      this.requestFilters = {
+        logicalOperator: FilterLogicalOperators.Or,
+        filters
+      };
+    } else {
+      this.refresh();
+    }
   }
 
 
-  deleteExerciseTemplate(id: number){
+  editExerciseTemplateDialog(id: number): void {
+    const dialogRef = this.dialog.open(ExerciseTemplateDialogComponent, {
+      width: '320px',
+      data: this.pagedExerciseTemplates.items.find(x=>x.id==id),
+      panelClass: 'custom-modalbox',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => result? this.LoadExercises() : null);
+  }
+
+  AddExerciseTemplate(): void {
+    const dialogRef = this.dialog.open(ExerciseTemplateDialogComponent, {
+      width: '320px',
+      data: new ExerciseTemplateDTO(),
+      panelClass: 'custom-modalbox',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==true) {
+        this.LoadExercises();
+      }
+    });
+  }
+
+  deleteExerciseTemplateDialog(id: number){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: "Confirm the deletion?",
+      panelClass: 'custom-modalbox'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.RemoveExerciseTemplate(id);
+      }
+    });
+  }
+
+  RemoveExerciseTemplate(id: number){
     this.cabinetService.DeleteExerciseTemplate(id)
     .subscribe(
       res=>{
         if(res.deleted){
-          this.HandleSearch();
+          this.LoadExercises();
+
         }
       }
     );
   }
 
-  SubmitExerciseTemplate(){
-    
-    this.cabinetService.SaveExerciseTemplate(this.AddExerciseTemplateForm.value)
-    .subscribe(
-      res=>{
-        if(res.saved){
-          this.AddExerciseTemplateForm.reset();          
-          this.AddExerciseTemplateForm.controls['primaryMuscleId'].setValue(0);
-          this.AddExerciseTemplateForm.controls['secondaryMuscleId'].setValue(0);          
-          this.HandleSearch();
+  filterExerciseTemplates() {
+    this.panelOpenState = false;
+    this.createFiltersFromForm();
+    this.LoadExercises();
+  }
+
+  private createFiltersFromForm() {
+    if (this.filterForm.value) {
+      const filters: Filter[] = [];
+
+      Object.keys(this.filterForm.controls).forEach(key => {
+        const controlValue = this.filterForm.controls[key].value;
+        if (controlValue) {
+          const foundTableColumn = this.tableColumns.find(tableColumn => tableColumn.name === key);
+          const filter: Filter = { path : foundTableColumn.index, value : controlValue };
+          filters.push(filter);
         }
-      }
-    );
+      });
+
+      this.requestFilters = {
+        logicalOperator: FilterLogicalOperators.And,
+        filters
+      };
+    }
   }
 
 }

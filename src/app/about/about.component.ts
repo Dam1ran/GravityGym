@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, BehaviorSubject, from, Scheduler, of } from 'rxjs';
-import { timeInterval, timeout, map, delay, concatMap } from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { concatMap, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-about',
@@ -8,7 +8,6 @@ import { timeInterval, timeout, map, delay, concatMap } from 'rxjs/operators';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-
 
   ziu = from("abcdefuck");
   foo = from("asdasdas");
@@ -28,6 +27,7 @@ export class AboutComponent implements OnInit {
         },
         err => console.log(err),
     );
-  }
+
+  }    
 
 }
