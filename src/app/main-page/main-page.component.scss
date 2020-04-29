@@ -1,24 +1,51 @@
 .container{
-    background-image: url("../../assets/line.png");
-    background-repeat: no-repeat;
-    background-position: 50% 52%;
-    background-size: 100% 4%;
+    background-image: url("../../assets/line.png"), url("../../assets/honey_comb.png");
+    background-repeat: no-repeat,repeat;
+    background-position: 50% 51%;
+    background-size: 100% 4%,10%;
     overflow-x: hidden;
+    min-height: 100%;
+    position: relative;
 }
 
 h1{
     color: whitesmoke;
-    font-size: 50px;
+    font-size: 100px;
     font-weight: 900;
     text-align: center;
     letter-spacing: 5px;
 }
 h2{
-    color: rgb(255, 170, 80);    
+    color: rgb(170, 170, 255);
     text-align: center;
-
+    font-size: 3em;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    padding-top: 80px;
 }
-
+#imgWrapper{
+    z-index: 2;
+}
+.swing{
+    position: absolute;
+    top: 50%;
+    height: 2%;
+    width: 30px;
+    left: calc(94% - 30px);
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 3px;
+    z-index: 0;
+    animation: swing 6s ease-out alternate 4.5s;
+    animation-iteration-count: infinite;
+}
+.texts{
+    width: 800px;
+    margin-left: 10px;
+    margin-right: 10px;    
+}
+.buttons{
+    margin-top: -5px;
+}
 button{
     padding: 5px 20px;
     margin: 5px 5px;
@@ -32,5 +59,146 @@ button{
 @media only screen and (min-width: 1024px) {
     .container{
         height: 100%;
+    }
+}
+
+@media only screen and (max-width: 1350px) {
+    .texts{
+        width: 600px;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .texts{
+        width: 400px;
+    }
+    h2{
+        font-size: 2em;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    h2{
+        padding-top: 0;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .texts{
+        width: 315px;
+    }
+    h1{
+        font-size: 50px;
+    }
+    h2{
+        font-size: 1.5em;
+    }
+    .img{
+        width: 100%;
+    }
+    button{
+        width: 90px;
+        padding: 0;
+    }
+    .buttons{
+        margin-top: 40px;
+    }
+}
+
+#gravity{
+    margin: 10px;
+    margin-top: 40px;
+    fill:none;
+    stroke:#ffdca0;
+    stroke-miterlimit:10;
+    animation: fill 0.5s ease forwards 4.5s;
+    filter: drop-shadow( 0px 0px 3px #ffdca0ad);   
+}
+
+#gravity path:nth-child(1){
+    stroke-dasharray: 186.78;
+    stroke-dashoffset: 186.78;
+    animation: line-anim 2s ease forwards;
+}
+
+#gravity path:nth-child(2){
+    stroke-dasharray: 185.05;
+    stroke-dashoffset: 185.05;
+    animation: line-anim 2s ease forwards 0.3s;
+}
+
+#gravity path:nth-child(3){
+    stroke-dasharray: 159.72;
+    stroke-dashoffset: 159.72;
+    animation: line-anim 2s ease forwards 0.6s;
+}
+
+#gravity path:nth-child(4){
+    stroke-dasharray: 140.64;
+    stroke-dashoffset: 140.64;
+    animation: line-anim 2s ease forwards 0.9s;
+}
+
+#gravity path:nth-child(5){
+    stroke-dasharray: 78.66;
+    stroke-dashoffset: 78.66;
+    animation: line-anim 2s ease forwards 1.2s;
+}
+
+#gravity path:nth-child(6){
+    stroke-dasharray: 115;
+    stroke-dashoffset: 115;
+    animation: line-anim 2s ease forwards 1.5s;
+}
+
+#gravity path:nth-child(7){
+    stroke-dasharray: 123.49;
+    stroke-dashoffset: 123.49;
+    animation: line-anim 2s ease forwards 1.8s;
+}
+
+#gravity path:nth-child(8){
+    stroke-dasharray: 186.88;
+    stroke-dashoffset: 186.88;
+    animation: line-anim 2s ease forwards 2.1s;
+}
+
+#gravity path:nth-child(9){
+    stroke-dasharray: 123.53;
+    stroke-dashoffset: 123.53;
+    animation: line-anim 2s ease forwards 2.4s;
+}
+
+#gravity path:nth-child(10){
+    stroke-dasharray: 264.46;
+    stroke-dashoffset: 264.46;
+    animation: line-anim 2s ease forwards 2.7s;
+}
+
+@keyframes line-anim{
+    to{
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fill{
+    from{
+        fill: transparent;
+    }
+    to{
+       fill: #ffdca0;
+    }
+}
+
+@keyframes swing{
+    from{
+        left: calc(94% - 30px);
+        background-color: #ffdca0;
+        box-shadow: inset 0 0 3px rgba(200,200,200,0.6), 0 0 10px rgba(255,230,230,0.8);
+    }
+    to{
+        left: 6%;
+        background-color: rgb(170, 170, 255);
+        box-shadow: inset 0 0 3px rgba(200,200,200,0.6), 0 0 10px rgba(255,230,230,0.8);
     }
 }

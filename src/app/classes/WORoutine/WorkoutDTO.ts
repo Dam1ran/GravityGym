@@ -1,7 +1,10 @@
+import { ExerciseDTO } from './ExerciseDTO';
+
 export class WorkoutDTO {    
     id: number;    
     order: number;    
     estimatedMin: number;    
     workoutComments: string;      
-    woRoutineId: number;    
+    woRoutineId: number;
+    exercises: ExerciseDTO[];
 }

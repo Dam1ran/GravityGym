@@ -1,0 +1,73 @@
+.modalbox{
+    background-color: #d2ced9;    
+    overflow: hidden;
+    margin: auto;
+    text-align: center;
+    border: 1px solid rgb(40, 21, 71);
+    border-bottom: 3px solid rgb(255,170,50);
+    box-shadow: 0 0 5px black, inset 0 0 20px white;
+    border-radius: 3px;
+    font-size: 18px;
+
+    .EditAUForm{
+        .preLoader{
+            height: 373px;
+        }
+        button{
+            font-size: 18px;
+        }
+        .unAssignCoach{
+            color: rgb(200,0,0);
+        }
+        .unAssignCoach:disabled,.assignCoach:disabled{
+            color: grey;
+        }
+        .assignCoach{
+            color: green;
+        }
+        .mat-input-element:disabled {            
+            color: black;
+            text-align: center;
+        }
+
+        mat-form-field{
+            width: 250px;
+        }
+        .borderControls{
+            border: 2px dashed rgb(180,180,180);
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin: 5px;
+            box-shadow: inset 0 0 20px rgb(100,100,100);
+        }
+        .userRoleField{
+            width: 150px;
+        }
+        .saveUserRoleBtn{
+            color: rebeccapurple;
+            outline: none;
+            border: none;
+        }
+        .saveUserRoleBtn:disabled{
+            color: grey;            
+        }
+        .header{
+            text-align: right;
+            button{
+                padding: 7px;
+                margin-right: 0;
+                margin-left: auto;
+            }
+        }
+
+    }
+    .mat-select-disabled {
+        ::ng-deep .mat-select-value {
+          color: rgb(0,100,0) /*!important*/;
+        }
+    }
+
+}
+mat-option,mat-select{
+    text-align: center;
+}

@@ -1,0 +1,54 @@
+<div class="modalbox">
+    <form [formGroup]="EditApplicationUserForm" class="EditAUForm">
+        <div class="header">
+            <button mat-button [mat-dialog-close]="false" class="closeBtn" matTooltip="Close" [matTooltipShowDelay]="500">
+                <i class="fas fa-times"></i>                   
+            </button> 
+        </div> 
+        <div *ngIf="loading" class="preLoader" fxLayout="row" fxLayoutAlign="center center"><mat-progress-spinner  diameter="40" mode="indeterminate" strokeWidth="7"></mat-progress-spinner></div>
+        <div *ngIf="!loading">
+            <mat-form-field class="fullNameField">
+                <mat-label>Full Name</mat-label>
+                <input matInput placeholder="Full Name" formControlName="fullName" class="fullName">
+            </mat-form-field>
+            <mat-form-field class="EmailField">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" class="email">
+            </mat-form-field>
+            <div class="borderControls">
+                <mat-form-field class="userCoachField">
+                    <mat-label>Coach Full Name</mat-label>                
+                    <mat-select [value]="data.coachId" (selectionChange)="onCoachSelectionChange($event, data.coachId)" [(value)]="selectedCoachId" cdkFocusInitial [disabled]="data.coachId!==0 || data.userRoleId!==1">
+                        <mat-option [value]="0">-- Assign Coach --</mat-option>
+                        <mat-option *ngFor="let coach of coachesDTOs" [value]="coach.id">{{coach.firstName}} {{coach.lastName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                    <button mat-button (click)="UnasignCoach( data.email, data.coachId )" [disabled]="data.coachId===0" class="unAssignCoach" matTooltip="Unassign Coach" [matTooltipShowDelay]="500">
+                        <i class="fas fa-user-alt-slash"></i>
+                    </button>
+                    <button mat-button [disabled]="saveCoachDisabled || data.userRoleId!==1" (click)="SaveCoach( data.email, selectedCoachId )" class="assignCoach" matTooltip="Assign Coach" [matTooltipShowDelay]="500">
+                        <i class="far fa-save"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="borderControls">
+                <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                    <mat-form-field class="userRoleField" >
+                        <mat-label>User Role</mat-label>
+                        <mat-select [value]="data.userRoleId" (selectionChange)="onSelectionRoleChange($event, data.userRoleId)" [(value)]="selectedRole" [disabled]="data.coachId!==0">                    
+                            <mat-option [value]="1">Client</mat-option>
+                            <mat-option [value]="2">Coach</mat-option>
+                            <mat-option [value]="3">Manager</mat-option>
+                            <mat-option [value]="4">Admin</mat-option>                    
+                        </mat-select>                
+                    </mat-form-field>
+                    <button mat-button (click)="SaveRole( data.email, selectedRole )" class="saveUserRoleBtn" [disabled]="saveRoleDisabled || data.coachId!==0" matTooltip="Save User Role" [matTooltipShowDelay]="500">
+                        <i *ngIf="!notification" class="far fa-save"></i>
+                        <i *ngIf="notification" class="fas fa-check-circle elementToFadeInAndOut" ></i>                   
+                    </button>                
+                </div>
+            </div>
+        </div>  
+    </form>
+</div>

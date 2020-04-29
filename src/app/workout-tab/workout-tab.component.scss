@@ -137,7 +137,8 @@ p{
         .accordion{
             mat-expansion-panel{
                 width: 320px;      
-                // margin: 0; 
+                margin-right: 0;
+                margin-left: 0;
             }
         }
     }

@@ -1,5 +1,18 @@
 <div class="container">
 
+  <div *ngFor="let exerciseDTO of exerciseDTOs; let first = first; let last=last;">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" class="exerciseContainer">
+      <app-edit-exercise [exerciseDTO]="exerciseDTO" class="exerciseAccordion"></app-edit-exercise>
+      <div class="buttons" fxLayout="column" fxLayoutAlign="space-between center">
+        <button class="sortBtn" (click)="swapUp(exerciseDTO)" [disabled]="first" matTooltip="Move Up" [matTooltipShowDelay]="500"><i class="fas fa-sort-up"></i></button>
+        <button class="sortBtn deleteExerciseBtn" (click)="deleteExercise(exerciseDTO)" matTooltip="Delete Exercise" [matTooltipShowDelay]="500"><i class="far fa-trash-alt"></i></button>
+        <button class="sortBtn" (click)="swapDown(exerciseDTO)" [disabled]="last" matTooltip="Move Down" [matTooltipShowDelay]="500"><i class="fas fa-sort-down"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <app-select-exercise-template [workoutId]="workout?.id" (updateWorkout)="onUpdateWorkout($event)"></app-select-exercise-template>
+
   <form fxLayout="row" fxLayoutAlign="center stretch">
     <mat-form-field class="wodescfield">
         <mat-placeholder class="placeholder">Workout Comments</mat-placeholder>
@@ -8,48 +21,8 @@
 
     <button title="Save Workout Comments" (click)="AddWorkoutComments()" [disabled]="!workoutComments.dirty">
       <mat-icon *ngIf="!notification">save</mat-icon>
-      <mat-icon *ngIf="notification" class="elementToFadeInAndOut done">done</mat-icon>      
-
+      <mat-icon *ngIf="notification" class="elementToFadeInAndOut done">done</mat-icon>
     </button>
   </form>
 
-
-    <!-- <form class="example-form">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Exercise" aria-label="Exercise" [matAutocomplete]="auto" [formControl]="etdCtrl">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngIf="isLoading" class="is-loading"><mat-progress-spinner diameter="40" mode="indeterminate" strokeWidth="10"></mat-progress-spinner></mat-option>
-            <ng-container *ngIf="!isLoading">
-
-                <mat-option *ngFor="let etd of filteredETDTOs" [value]="etd">              
-                    <span>{{etd.name}}</span> |
-                    <small>Desc: {{etd.comments}}</small>
-                </mat-option>
-
-              </ng-container>
-
-          </mat-autocomplete> 
-
-          
-        </mat-form-field>
-        
-        <span *ngIf="noResults" class="noResults">No Results</span>
-
-        <br> -->
-      
-        <!-- <mat-slide-toggle
-          [checked]="etdCtrl.disabled"
-          (change)="etdCtrl.disabled ? etdCtrl.enable() : etdCtrl.disable()">
-          Disable Input?
-        </mat-slide-toggle> -->
-      <!-- </form>
-      
-
-
-
-
-
-    {{routineId}}
-    {{woNumber}}
-    {{workout?.workoutComments}} -->
 </div>

@@ -4,5 +4,5 @@ export class DaySchedule {
     id: number;
     dayOfWeek: string;
     description: string;
-    imageUrl: string;
+    imageName: string;
 }

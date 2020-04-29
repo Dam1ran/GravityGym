@@ -2,18 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PersonalInfo } from '../classes/PersonalInfo';
 import { Observable } from 'rxjs';
-import { AppUserDTOsResponse } from '../classes/AppUserDTOsResponse';
-import { GetUserRequest } from '../classes/GetUserRequest';
 import { CoachDTO } from '../classes/CoachDTO';
 import { ClientDTO } from '../classes/ClientDTO';
 import { ExerciseTemplateDTO } from '../classes/ExerciseTemplateDTO';
-import { GetExerciseTemplateRequest } from '../classes/GetExerciseTemplateRequest';
-import { ExerciseTemplateDTOResponse } from '../classes/ExerciseTemplateDTOResponse';
 import { MuscleDTO } from '../classes/MuscleDTO';
 import { WoRoutineDTO } from '../classes/WORoutine/WoRoutineDTO';
 import { WorkoutDTO } from '../classes/WORoutine/WorkoutDTO';
 import { PaginatedRequest } from '../classes/PageModels/PaginatedRequest';
 import { PaginatedResult } from '../classes/PageModels/PaginatedResult';
+import { ApplicationUserDTO } from '../classes/ApplicationUserDTO';
+import { ExerciseDTO } from '../classes/WORoutine/ExerciseDTO';
 
 
 @Injectable({
@@ -39,11 +37,11 @@ export class CabinetService {
     return this.http.post<PersonalInfo>(endpoint,data);
   }
 
-  public GetUsers(data: GetUserRequest) : Observable<AppUserDTOsResponse>
+  public GetUsers(data: PaginatedRequest) : Observable<PaginatedResult<ApplicationUserDTO>>
   {
     const endpoint: string = this.cabinet+'getusers';   
 
-    return this.http.post<AppUserDTOsResponse>(endpoint,data);
+    return this.http.post<PaginatedResult<ApplicationUserDTO>>(endpoint,data);
   }
 
   public GetCoaches() : Observable<CoachDTO[]>
@@ -81,14 +79,7 @@ export class CabinetService {
     return this.http.get<ClientDTO[]>(endpoint);
   }
 
-  public GetExerciseTemplatesT(data: GetExerciseTemplateRequest) : Observable<ExerciseTemplateDTOResponse>
-  {
-    const endpoint: string = this.cabinet+'getexercisetemplates';
-
-    return this.http.post<ExerciseTemplateDTOResponse>(endpoint,data);
-  }
-
-  public GetExerciseTemplates(paginatedRequest: PaginatedRequest): Observable<PaginatedResult<ExerciseTemplateDTO>> {
+  public GetExerciseTemplates(paginatedRequest): Observable<PaginatedResult<ExerciseTemplateDTO>> {
 
     return this.http.post<PaginatedResult<ExerciseTemplateDTO>>(this.cabinet + 'getexercisetemplates', paginatedRequest);
 
@@ -172,6 +163,40 @@ export class CabinetService {
   {
     const endpoint: string = this.cabinet+'deletelastworkoutfromroutine';
     return this.http.delete<WorkoutDTO>(endpoint+`/${id}`);
+  }
+
+  public AddExerciseToWorkout(data: ExerciseDTO) : Observable<ExerciseDTO[]>
+  {
+    const endpoint: string = this.cabinet+'addexercisetoworkout';
+
+    return this.http.post<ExerciseDTO[]>(endpoint,data);
+  }
+
+  public GetExercisesFromWorkout(id: number) : Observable<ExerciseDTO[]>
+  {
+    const endpoint: string = this.cabinet+'getexercisesfromworkout';
+
+    return this.http.get<ExerciseDTO[]>(endpoint+`/${id}`);
+  }
+
+  public DeleteExercise(id: number)
+  {
+    const endpoint: string = this.cabinet+'deleteexercise';
+    return this.http.delete<any>(endpoint+`/${id}`);
+  }
+
+  public SwapUp(data: ExerciseDTO) : Observable<ExerciseDTO[]>
+  {
+    const endpoint: string = this.cabinet+'swapup';
+
+    return this.http.post<ExerciseDTO[]>(endpoint,data);
+  }
+
+  public SwapDown(data: ExerciseDTO) : Observable<ExerciseDTO[]>
+  {
+    const endpoint: string = this.cabinet+'swapdown';
+
+    return this.http.post<ExerciseDTO[]>(endpoint,data);
   }
 
 }

@@ -1,150 +1,135 @@
-.searchform{
-    font-size: 20px;    
-    margin: 10px auto;    
-    border-top: 2px solid rgba(200,200,200,0.5);
-    border-bottom: 2px solid rgba(200,200,200,0.5);
-    box-shadow: inset 0 0 25px black;
-    button{        
-        background-color: rgb(80, 60, 140);
-        margin-bottom: 10px ;
-        z-index: 1;
-    }
-    i{
-        font-size: 24px;
-        color: rgb(255, 170, 80);
-    }
-}
-.searchHeader{
-    background-color: rgba(240, 230, 255, 0.2);
-    padding: 10px;
-}
-.pageNumber{
-    width: 60px;
+p{
     text-align: center;
-    margin: 5px -5px;
+    font-size: 30px;
+    color: whitesmoke;
+    text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+    font-family: 'Teko', sans-serif;
 }
-.pageNumberInput:disabled{
-    color: black;
-    font-weight: bold;      
-    padding: 3px 0;  
-    background-color: rgba(0,0,0,0.1);
-    background-color: rgb(80, 60, 140);
-
-    text-shadow: 0 0 5px rgb(255, 170, 80);
-    z-index: -2;
-}
-
-.pageSize{
-    width: 70px;
-}
-
-.search{
-    width: 194px;    
-}
-.searcContainer{
-    margin: 0 20px;
-}
-
-.userData{    
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
-}
-.userInfo{
-    width: 300px;
-    cursor: default;
-    div{
-        padding: 5px;
-    }
-}
-
-.userRole{
-    width: 92px;
-    text-align: center;
-    button{
+.controls{
+    max-width: 80%;
+    min-width: 1040px;
+    margin: auto;
+    margin-top: 5px;
+    background-color: rgba(255,255,255,0.5);
+    background-image: linear-gradient(to right,rgba(255,255,255,0.5),rgba(255,255,255,0.0));
+    .searchField{
+        color: black;
         font-size: 18px;
-        color: rgb(90, 0, 170);
-        background-color: rgba(0, 0, 0, 0.1);
+        margin-left: 19px;
+        width: 200px;
     }
-    button:disabled{
-        color: rgba(50,50,50,0.5);        
+    .searchInput{
+        width: 190px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
-}
-.userCoach{
-    width: 300px;
-    text-align: center;
-    button{
+    .fa-search{
         font-size: 18px;
-        color: rgb(90, 0, 170);
-        background-color: rgba(0,0,0,0.1);
-        margin: 0 5px;
     }
-    button:disabled{
-        color: rgba(50,50,50,0.5);        
+    .mat-progress-spinner{
+        margin-left: 25%;
     }
-    .ubtn{
-        color: rgb(200,0,0);
+    .mat-paginator{
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
-}
-.userCoachField{
-    width: 270px;
-    text-align: center;    
-}
 
-.mat-select-disabled {
-    ::ng-deep .mat-select-value {
-      color: rgb(0,100,0) /*!important*/;
+}
+.filterContainer{
+    position: relative;
+    max-width: 80%;
+    min-width: 1040px;
+    margin: auto;
+    .filter{
+        position: absolute;
+        left: 220px;    
+        top: -74px;
+        width: 250px;
+        padding: 10px;    
+        z-index: 2;
+        .mat-expansion-panel-header{
+            background-color: rgb(193, 196, 214);
+            max-height: 48px;
+        }
+        .mat-expansion-panel{
+            font-size: 18px;
+        }
+        input{
+            width: 200px;
+        }
+        form{
+            text-align: center;
+        }
     }
 }
-
-.myTable{    
-    width: fit-content;
-    margin: 10px auto;
-}
-
-.mtHeader{
-    background-color: rgba(255,255,255,0.7);
-    font-size: 20px;
+.mat-table{
+    max-width: 80%;
+    min-width: 1040px;
+    min-height: 204px;
+    margin: auto;  
+    margin-top: -9px;
     border-radius: 5px;
-    div{
-        padding: 10px;
-        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    border-bottom: 9px solid rgba(100, 0, 255, 0.5);
+    .mat-row{
+        text-shadow: 0 0 3px rgba(black,0.3);
     }
-
-}
-
-.mtRows{
-    font-size: 18px;
-    border-radius: 5px;
-    padding: 10px;
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    margin-bottom: 5px;
-}
-
-.mtRows:nth-child(even){
-    background-color: rgba(255,255,255,0.95);
-
-}
-
-.mtRows:nth-child(odd){
-    background-color: rgba(235,235,235,0.9);
-
-}
-
-
-.updated{
-    text-align: center;
-    font-size: 18px;
-    text-shadow: 0 0 10px #ffffff80;         
-}
-
-
-@media only screen and (max-width: 696px) {
-    .mtHeader{
-        font-size: 18px;
+    .mat-column-userRoleId{
+        flex: 0 0 70px;
+        white-space: unset;
     }
-    .mtRows{
-        font-size: 16px;
+    .mat-column-actions{
+        flex: 0 0 100px;
+        white-space: unset;
+        padding: 0;
+        .refresh{
+            margin: auto;
+            border-radius: 3px;
+            font-size: 18px;
+            width: 40px;
+            border: 1px solid transparent;
+            padding: 5px;
+            box-shadow: 0 0 5px rgba(black,0.5),inset 0 0 5px rgba(black,0.0);
+            outline: none;
+            transition: 0.3s;
+            cursor: pointer;
+            color: rebeccapurple;
+            i{
+                transition: 0.3s;
+            }
+        }
+        .refresh:active{
+            box-shadow: inset 0 0 5px rgba(black,0.5);
+            border: 1px solid grey;
+            .fa-sync-alt{
+                transform: rotate(45deg);
+            }
+        }
+        .fa-sync-alt{
+            color: black;
+        }
+        .edit{
+            cursor: pointer;
+            box-shadow: inset 0 0 5px rgba(white,1);
+            border: 1px solid rgb(180, 180, 180);
+            outline: none;
+            color: red;
+            color: rgb(255,170,50);
+            margin: 5px;
+            font-size: 18px;
+            padding: 5px;
+            width: 40px;
+            margin: auto;
+            border-radius: 3px;
+            transition: 0.3s;
+            background-color: rgba(0,0,0,0.1);
+        }
+        .edit:active{
+            background-color: rgba(0,0,0,0.4);
+        }
     }
+}
 
+.mat-row:nth-child(even){
+    background-color:rgb(240,240,240);
 }

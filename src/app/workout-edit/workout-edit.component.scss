@@ -13,6 +13,36 @@
 
         }        
     }
+    .exerciseContainer{
+        margin-top: 2px;
+    }
+    .exerciseAccordion{
+        width: calc(100% - 60px);
+    }
+    .buttons{
+        position: relative;
+        background-color: rgba(220, 220, 220, 0.8);
+        width: 60px;
+        border-radius: 3px;
+        .sortBtn{
+            background-color: rgb(220,220,220);
+            z-index: 1;
+            padding: 0;
+            margin: 0;
+            width: 60px;
+            font-size: 19px;
+            border: 1px solid grey;
+            border-radius: 3px;
+        }
+        .deleteExerciseBtn{
+            z-index: 0;
+            position: absolute;
+            top: calc(50% - 15px);
+            height: 30px;
+            color: rgb(200,0,0);
+            width: 50px;
+        }
+    }
     button{
         height: inherit;
         outline: none;

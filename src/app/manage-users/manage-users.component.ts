@@ -1,213 +1,155 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { PaginatedResult } from '../classes/PageModels/PaginatedResult';
+import { TableColumn } from '../classes/PageModels/TableColumn';
+import { MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { CabinetService } from '../Services/cabinet.service';
-import { GetUserRequest } from '../classes/GetUserRequest';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AppUserDTO } from '../classes/AppUserDTO';
-import { CoachDTO } from '../classes/CoachDTO';
-import { SaveUserRoleDTO } from '../classes/SaveUserRoleDTO';
-import { ActionCoachDTO } from '../classes/ActionCoachDTO';
+import { PaginatedRequest } from '../classes/PageModels/PaginatedRequest';
+import { RequestFilters } from '../classes/PageModels/RequestFilters';
+import { FilterLogicalOperators } from '../classes/PageModels/FilterLogicalOperators';
+import { merge } from 'rxjs';
+import { Filter } from '../classes/PageModels/Filter';
+import { ApplicationUserDTO } from '../classes/ApplicationUserDTO';
+import { EditApplicationUserDialogComponent } from '../manage-users/edit-application-user-dialog/edit-application-user-dialog.component';
 
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.scss']
 })
-export class ManageUsersComponent implements OnInit {
+export class ManageUsersComponent implements AfterViewInit {
 
-  public userRequest = new GetUserRequest(null,1,2);
-  public numberOfPages: number;
-  public searchUsersForm : FormGroup; 
-  private userDTOs: AppUserDTO[];
-  private coachesDTOs: CoachDTO[];
-  public nextDisabled: boolean;
-  public previousDisabled: boolean;
-  public saveRoleDisabled: boolean[]=[];
-  public saveCoachDisabled: boolean[]=[];
-
-  public roleSaved: boolean;
-  public notification = [];
-
-
-  constructor(
-    private cabinetService: CabinetService,
-    private fb: FormBuilder
-    ) { }
-
-  ngOnInit() {
-    
-    this.searchUsersForm = this.fb.group({      
-      filter:    [''],
-      pageSize:    ['2'],
-      page:    [{value: '1', disabled: true },[Validators.min(1)]]
-    });
-    
-   
-    this.previousDisabled=true;
-    this.GetUsers(this.userRequest);
-    this.GetCoaches();
-
-  }
-
-  Next(){
-
-    let page: number = +this.searchUsersForm.controls['page'].value;
-    if(page<this.numberOfPages){
-
-      page++;
-
-      this.userRequest.page = page;
-
-      this.previousDisabled = false;        
-
-      if(page==this.numberOfPages)
-      {
-        this.nextDisabled = true;
-      }
-      
-      
-      this.searchUsersForm.controls['page'].setValue(page);    
   
-      this.GetUsers(this.userRequest);
+
+  
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false}) sort: MatSort;
+  isLoading=true;
+  pagedApplicationUsers: PaginatedResult<ApplicationUserDTO>;
+  tableColumns: TableColumn[] = [    
+    { name: 'fullName', index: 'fullName', displayName: 'Full Name', useInSearch: true },
+    { name: 'email', index: 'email', displayName: 'Email', useInSearch: true },
+    { name: 'coachFullName', index: 'coachFullName', displayName: 'Coach Full Name' },
+    { name: 'userRoleId', index: 'userRoleId', displayName: 'Role' },
+    { name: 'actions', index: 'actions', displayName: 'Actions' }
+  ];
+  displayedColumns: string[];
+
+  requestFilters: RequestFilters;
+  
+  searchInput = new FormControl('');
+  filterForm: FormGroup;
+  panelOpenState = false;
+
+  constructor
+  (
+    private cabinetService: CabinetService,
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+
+  )
+  {
+    this.displayedColumns = this.tableColumns.map(column => column.name);
+    this.filterForm = this.formBuilder.group({
+      fullName: [''],
+      coachFullName: [''],
+      email: ['']
+    });
+  }
+
+
+  ngAfterViewInit() {
+    this.LoadApplicationUsers();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
+      this.LoadApplicationUsers();
+    });
+
+  }
+
+  LoadApplicationUsers(){
+    this.isLoading=true;
+    const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
+    this.cabinetService.GetUsers(paginatedRequest)
+    .subscribe(
+      res=>{
+        this.pagedApplicationUsers = res;
+        this.isLoading=false;        
+      },
+      err=>{console.log(err);}
+    );
+  }
+
+  refresh() {
+    this.requestFilters = {filters: [], logicalOperator: FilterLogicalOperators.And};
+    this.panelOpenState = false;
+    this.filterForm.reset();
+    this.LoadApplicationUsers();
+  }
+
+  applySearch() {
+    this.createFiltersFromSearchInput();
+    this.panelOpenState = false;
+    this.LoadApplicationUsers();
+  }
+  
+  private createFiltersFromSearchInput() {
+    const filterValue = this.searchInput.value.trim();
+    if (filterValue) {
+      const filters: Filter[] = [];
+      this.tableColumns.forEach(column => {
+        if (column.useInSearch) {
+          const filter: Filter = { path : column.index, value : filterValue };
+          filters.push(filter);
+        }
+      });
+      this.requestFilters = {
+        logicalOperator: FilterLogicalOperators.Or,
+        filters
+      };
+    } else {
+      this.refresh();
     }
-
-
-    
   }
 
-  Previous(){
 
-    let page: number = +this.searchUsersForm.controls['page'].value;
-    
-    if(page>1)
-    {
-      page--;
+  editApplicationUserDialog(id: number): void {
+    const dialogRef = this.dialog.open(EditApplicationUserDialogComponent, {
+      width: '320px',
+      data: this.pagedApplicationUsers.items.find(x=>x.id==id),
+      panelClass: 'custom-modalbox',
+      disableClose: true
+    });
 
-      this.nextDisabled = false;  
+    dialogRef.afterClosed().subscribe(() => this.LoadApplicationUsers());
+  }
 
-      if(page==1)
-      {
-        this.previousDisabled = true;        
-      }
-      
+  filterExerciseTemplates() {
+    this.panelOpenState = false;
+    this.createFiltersFromForm();
+    this.LoadApplicationUsers();
+  }
 
-      this.userRequest.page = page;
+  private createFiltersFromForm() {
+    if (this.filterForm.value) {
+      const filters: Filter[] = [];
 
-      this.searchUsersForm.controls['page'].setValue(page);     
+      Object.keys(this.filterForm.controls).forEach(key => {
+        const controlValue = this.filterForm.controls[key].value;
+        if (controlValue) {
+          const foundTableColumn = this.tableColumns.find(tableColumn => tableColumn.name === key);
+          const filter: Filter = { path : foundTableColumn.index, value : controlValue };
+          filters.push(filter);
+        }
+      });
 
-      this.GetUsers(this.userRequest);
-
+      this.requestFilters = {
+        logicalOperator: FilterLogicalOperators.And,
+        filters
+      };
     }
-
-    
-    
-  }
-
-  GetUsers(userRequest: GetUserRequest){
-    this.saveRoleDisabled=[];
-    this.userRequest.pageSize = +this.searchUsersForm.controls['pageSize'].value;
-    this.cabinetService.GetUsers(userRequest)
-    .subscribe(
-      res=>
-      {
-        this.userDTOs = res.appUserDTOs;
-        this.numberOfPages = res.numberOfPages;        
-        this.nextDisabled = this.numberOfPages==1 || this.searchUsersForm.controls['page'].value == this.numberOfPages;
-        this.previousDisabled = this.searchUsersForm.controls['page'].value == 1;
-      }
-    );
-  }
-
-  GetCoaches(){
-    this.cabinetService.GetCoaches()
-    .subscribe(
-      res=>
-      {
-        this.coachesDTOs = res;
-      }
-    );
-  }
-
-  GetCoachById(id: number){
-
-    let coachDTO = this.coachesDTOs.find(x=>x.id==id);
-    
-    return coachDTO;
-
-  }
-
-  Search(){    
-    this.userRequest.filter=this.searchUsersForm.controls['filter'].value;    
-    this.userRequest.page=1;    
-    this.searchUsersForm.controls['page'].setValue(1);
-    this.GetUsers(this.userRequest);    
-  }
-
-  onSelectionRoleChange(ob,role: number,i: number) {
-
-    let selectedRole = +ob.value;
-    this.saveRoleDisabled[i] = selectedRole!=role;
-    
-  }
-
-  SaveRole(email,id, index){
-    let saveUserRoleDTO = new SaveUserRoleDTO();
-    saveUserRoleDTO.userEmail=email;
-    saveUserRoleDTO.roleId=id;
-    this.cabinetService.SaveUserRole(saveUserRoleDTO)
-    .subscribe(
-      res=>
-      {
-        this.notification[index] = 'Saved!'
-        setTimeout(()=>{this.notification=[];},2000);  
-        this.GetUsers(this.userRequest);
-        this.GetCoaches();
-      }
-    );
-  }
-
-  onCoachSelectionChange(ob, index){
-
-    let selectedCoachId = +ob.value;
-
-    this.saveCoachDisabled[index] = selectedCoachId!=index && selectedCoachId!=0;
-
-  }
-
-  SaveCoach(userEmail, coachId){
-
-    let actionCoachDTO = new ActionCoachDTO();
-    actionCoachDTO.clientEmail = userEmail;
-
-    actionCoachDTO.coachEmail = this.GetCoachById(coachId).email;
-   
-    this.cabinetService.AssignCoach(actionCoachDTO)
-    .subscribe(
-      res=>
-      {
-        this.saveCoachDisabled=[];
-        this.GetUsers(this.userRequest);
-        this.GetCoaches();        
-      }
-    );
-  }
-
-  UnasignCoach(userEmail, coachId){
-
-    let actionCoachDTO = new ActionCoachDTO();
-
-    actionCoachDTO.clientEmail = userEmail;
-
-    actionCoachDTO.coachEmail = this.GetCoachById(coachId).email;
-   
-    this.cabinetService.UnassignCoach(actionCoachDTO)
-    .subscribe(
-      res=>
-      {
-        this.saveCoachDisabled=[];
-        this.GetUsers(this.userRequest);
-        this.GetCoaches();        
-      }
-    );
   }
 
 }

@@ -1,128 +1,76 @@
-<form [formGroup]="searchUsersForm" class="searchform mat-elevation-z15">
+<p>Manage Users</p>
 
-    <div class="searchHeader" fxLayout="row | wrap" fxLayoutAlign="center center">      
-            
-        <mat-form-field class="pageSize">
-
-            <mat-label>Page Size</mat-label>
-
-            <mat-select required formControlName="pageSize">
-
-                <mat-option value='2'>2</mat-option>
-                            
-                <mat-option value='10'>10</mat-option>
-                <mat-option value='15'>15</mat-option>
-                <mat-option value='20'>20</mat-option>
-
-            </mat-select>
-                    
+<div class="controls">
+    <div fxLayout="row" fxLayoutAlign="space-between center"> 
+        <mat-form-field class="searchField">
+            <mat-placeholder>
+                <mat-icon>subject</mat-icon>
+                <b> Search</b>
+            </mat-placeholder>
+            <input matInput [formControl]="searchInput" (keyup.enter)="applySearch()" class="searchInput">
         </mat-form-field>
-
-
-        <button mat-fab (click)="Previous()" [disabled]="previousDisabled">
-            <i class="fas fa-caret-square-left"></i>
-        </button>
-
-        <mat-form-field class="pageNumber" >
-
-            <input class="pageNumberInput" matInput formControlName="page" />
-
-        </mat-form-field>
-
-        <button mat-fab (click)="Next()" [disabled]="nextDisabled">
-            <i class="fas fa-caret-square-right"></i>
-        </button>
-
-        <div class="searcContainer">
-
-            <mat-form-field class="search">
-                <input matInput placeholder="Search"  type="text" formControlName="filter" (keyup.enter)="Search()"/>
-            </mat-form-field>
-            
-            <button mat-fab (click)="Search()" [disabled]="!searchUsersForm.valid">
-                <i class="fas fa-search"></i>
-            </button>
-
-        </div>
-            
-    </div>
-
-</form>
-
-
-<div class="myTable">
-
-    <div class="mtRows" fxLayout="row | wrap" fxLayoutAlign="center center" *ngFor="let userDTO of userDTOs; let i = index;">
-
-        <div class="userInfo"> 
-            
-            <div class="userData">{{userDTO.userName}}</div>
-            <div class="userData">{{userDTO.userEmail}}</div>
-            <div class="userData">{{userDTO.firstName}} {{userDTO.lastName}}</div>
-
-        </div>
-
-        <div class="userCoach">
-
-            <mat-form-field class="userCoachField">
-
-                <mat-select [value]="userDTO.coachId" (selectionChange)="onCoachSelectionChange($event, i)" [(value)]="selectedCoachId" [disabled]="userDTO.coachId!=0">
-                       
-                    <mat-option [value]="0">-- Assign Coach --</mat-option>
-                    <mat-option *ngFor="let coach of coachesDTOs" [value]="coach.id">{{coach.firstName}} {{coach.lastName}}</mat-option>
-    
-                </mat-select>
-                        
-            </mat-form-field>
-
-            <div>
-
-                <button mat-button (click)="SaveCoach( userDTO.userEmail, selectedCoachId )" title="Assign Coach" [disabled]="!saveCoachDisabled[i]">
-                    <i class="far fa-save"></i>
-                </button>
-                <button class="ubtn" mat-button (click)="UnasignCoach( userDTO.userEmail, userDTO.coachId )" title="Unnasign Coach" [disabled]="userDTO.coachId==0">
-                    <i class="fas fa-user-alt-slash"></i>
-                </button>
-
-            </div>
-                
-        </div>
-        
-        <div  class="userRole">
-        
-            <mat-form-field class="userData userRole" >
-        
-                <mat-select [value]="userDTO.userRoleId" (selectionChange)="onSelectionRoleChange($event, userDTO.userRoleId,i)" [(value)]="selectedRole">
-        
-                    <mat-option [value]="1">Client</mat-option>
-                    <mat-option [value]="2">Coach</mat-option>
-                    <mat-option [value]="3">Manager</mat-option>
-                    <mat-option [value]="4">Admin</mat-option>
-        
-                </mat-select>
-        
-            </mat-form-field>
-
-            <div>
-
-                <button *ngIf="!notification[i]" mat-button (click)="SaveRole( userDTO.userEmail, selectedRole, i)" title="Save Role" [disabled]="!saveRoleDisabled[i]" >
-                    <i class="far fa-save"></i> 
-                    <i *ngIf="notification[i]" class="fas fa-check-circle" ></i>           
-                </button>
-
-                <button *ngIf="notification[i]" class="elementToFadeInAndOut updated" mat-button title="Saved!" >
-                    <i class="fas fa-check-circle" ></i>           
-                </button>
-                
-            </div>           
-            
-            
-        </div>
-        
-        
-    </div>   
-    
-
+        <mat-progress-spinner *ngIf="isLoading" diameter="35" mode="indeterminate" strokeWidth="6"></mat-progress-spinner>    
+        <mat-paginator [length]="pagedApplicationUsers?.total" [pageSizeOptions]="[5, 10, 25, 50]" pageSize="5" [showFirstLastButtons]="true"></mat-paginator>            
+   </div>
 </div>
 
+<div class="filterContainer">
+    <div class="filter">
+    <mat-accordion class="accordion">
+        <mat-expansion-panel [(expanded)]="panelOpenState">
 
+            <mat-expansion-panel-header>
+                <mat-panel-title>Search Filters</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <form [formGroup]="filterForm">
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Full Name" formControlName="fullName" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Coach Full Name" formControlName="coachFullName" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Email" formControlName="email" (keyup.enter)="filterExerciseTemplates();"  />
+                </mat-form-field>
+            </form>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+    </div>
+</div>
+
+<mat-table #table [dataSource]="pagedApplicationUsers?.items" matSort matSortActive="fullName" matSortDirection="asc">
+    <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </mat-header-cell>
+        <mat-cell *matCellDef="let applicationUser"> {{applicationUser.fullName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+        <mat-cell *matCellDef="let applicationUser"> {{applicationUser.email}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="coachFullName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Coach Full Name </mat-header-cell>
+        <mat-cell *matCellDef="let applicationUser"> {{applicationUser.coachFullName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="userRoleId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Role </mat-header-cell>
+        <mat-cell *matCellDef="let applicationUser"> {{applicationUser.roleString}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>            
+            <button class="refresh" (click)="refresh()" matTooltip="Refresh Table" [matTooltipShowDelay]="1000">
+                <i class="fas fa-sync-alt"></i>
+            </button> 
+        </mat-header-cell>
+        <mat-cell *matCellDef="let applicationUser">
+            <button class="edit" (click)="editApplicationUserDialog(applicationUser.id)" matTooltip="Edit User" [matTooltipShowDelay]="1000">
+                <i class="far fa-edit"></i>
+            </button>             
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>

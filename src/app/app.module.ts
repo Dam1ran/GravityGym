@@ -61,9 +61,11 @@ import { WorkoutEditComponent } from './workout-edit/workout-edit.component';
 import { WorkoutRoutineEditComponent } from './workout-routine-edit/workout-routine-edit.component';
 import { WORoutineDescriptionComponent } from './woroutine-description/woroutine-description.component';
 import { RollingPipe } from './rolling.pipe';
-import { SelectExerciseTemplateComponent } from './select-exercise-template/select-exercise-template.component';
+import { SelectExerciseTemplateComponent } from './workout-edit/select-exercise-template/select-exercise-template.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { ExerciseTemplateDialogComponent } from './exercises-tab/exercise-template-dialog/exercise-template-dialog.component';
+import { EditApplicationUserDialogComponent } from './manage-users/edit-application-user-dialog/edit-application-user-dialog.component';
+import { EditExerciseComponent } from './workout-edit/edit-exercise/edit-exercise.component';
 
 
 
@@ -102,10 +104,8 @@ import { ExerciseTemplateDialogComponent } from './exercises-tab/exercise-templa
     SelectExerciseTemplateComponent,
     ConfirmationDialogComponent,
     ExerciseTemplateDialogComponent,
- 
-    
-
-    
+    EditApplicationUserDialogComponent,
+    EditExerciseComponent   
     
   ],
   imports: [
@@ -138,7 +138,7 @@ import { ExerciseTemplateDialogComponent } from './exercises-tab/exercise-templa
     MatMenuModule
     
   ],
-  entryComponents: [LoginDialogComponent,ConfirmationDialogComponent,ExerciseTemplateDialogComponent],
+  entryComponents: [LoginDialogComponent,ConfirmationDialogComponent,ExerciseTemplateDialogComponent,EditApplicationUserDialogComponent],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })

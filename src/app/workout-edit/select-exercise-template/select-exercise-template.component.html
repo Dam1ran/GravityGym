@@ -1,0 +1,19 @@
+{{workoutId}}
+<form class="example-form">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Exercise" aria-label="Exercise" [matAutocomplete]="auto" [formControl]="etdCtrl">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngIf="isLoading" class="is-loading"><mat-progress-spinner diameter="40" mode="indeterminate" strokeWidth="10"></mat-progress-spinner></mat-option>
+        <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let etd of filteredETDTOs" [value]="etd">              
+                <span>{{etd.name}}</span> |
+                <small>Desc: {{etd.comments}}</small>
+            </mat-option>
+          </ng-container>
+      </mat-autocomplete>          
+    </mat-form-field>
+    <div *ngIf="noResults" class="noResults">No Results</div>
+    <button mat-button (click)="AddExerciseToWorkout()" [disabled]="!exerciseChoosen" matTooltip="Add Exercise To Workout" [matTooltipShowDelay]="500"><i class="fas fa-level-up-alt"></i></button>
+  </div>
+</form>
