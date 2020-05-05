@@ -1,4 +1,3 @@
-<!-- <div class="spanner"></div> -->
 <div [ngClass] ="{'fade': fadeIt, 'container': true}"  fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="space-evenly center">
 
     <div fxFlex="50%"  class="registerPageInfo mat-elevation-z8">
@@ -19,18 +18,14 @@
         
     </div>
 
-    <div fxFlex="50%" class="registrationFormContainer mat-elevation-z8">
-    
-        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-    
-            <h2>Register:</h2>
-    
+    <div fxFlex="50%" class="registrationFormContainer mat-elevation-z8">    
+        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">    
+            <h2>Register:</h2>    
         </div>
     
         <form novalidate  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     
-            <div class="inputs">
-    
+            <div class="inputs">    
                 <mat-form-field>
                     <input matInput placeholder="User Name *" formControlName="userName">
                 </mat-form-field>
@@ -61,10 +56,8 @@
     
                 <mat-form-field>
                     <input type="password" [class.invalid]="registerForm.errors?.missMatch" matInput placeholder="Confirm Password *" formControlName="confirmPassword">
-                </mat-form-field>    
-                
-            </div>   
-           
+                </mat-form-field>                
+            </div>              
     
             <button [disabled]="!registerForm.valid" mat-button type="submit">REGISTER</button>
 
@@ -74,22 +67,14 @@
                <mat-progress-spinner diameter="40" mode="indeterminate" strokeWidth="15"></mat-progress-spinner>    
             </div>
 
-
             <div *ngIf="registerForm.errors?.missMatch" class="errors">
-    
-                Passwords do not match
-    
+                Passwords do not match    
             </div>
-
 
             <div *ngIf="hasErrors" class="errors">    
                 {{errResponse}}    
             </div>
 
-
-            <!-- [disabled]="!registerForm.valid" -->
-        </form>
-        
-    </div>
-    
+        </form>        
+    </div>    
 </div>

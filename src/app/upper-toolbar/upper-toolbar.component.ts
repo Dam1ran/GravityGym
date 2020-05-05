@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 import { AuthService } from '../Services/auth.service';
 import { Router } from '@angular/router';
 import { Fader } from '../Shared/fader';
@@ -15,6 +15,7 @@ export class UpperToolbarComponent extends Fader implements OnInit {
   constructor(
     public dialog: MatDialog,
     private logged: AuthService,
+    public snackBar: MatSnackBar,
     private router: Router
     ) {
     super();
@@ -49,8 +50,18 @@ export class UpperToolbarComponent extends Fader implements OnInit {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userRole');
     this.router.navigate(['MainPage']);
+    this.Message('Logged Out');
   }
 
+  Message(msg: string){
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'bottom';
+    config.horizontalPosition = 'center';
+    config.duration = 1500;
+    config.panelClass = ['snackPanel']
+    
+    this.snackBar.open(msg,null, config);
+  }
 
 
 }

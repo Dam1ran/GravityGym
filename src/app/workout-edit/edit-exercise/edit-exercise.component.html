@@ -4,12 +4,54 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{exerciseDTO?.name}}
-                </mat-panel-title>
+                </mat-panel-title>               
             </mat-expansion-panel-header>
-            
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="formBtnRow">
+                <span class="material-icons" [matMenuTriggerFor]="menu" matTooltip="INFO" [matTooltipShowDelay]="500">help_outline</span>
+                <button class="addBtn" [disabled]="!AddSetForm.valid" mat-button matTooltip="Add Set To Exercise" [matTooltipShowDelay]="500" (click)="AddSet()"><i class="fas fa-plus-circle"></i>Add Set</button>
+                <button class="clearBtn" [disabled]="!AddSetForm.dirty" mat-button matTooltip="Clear Fields" [matTooltipShowDelay]="500" (click)="ClearFields()"><i class="fas fa-eraser"></i></button>
+            </div>
+            <form [formGroup]="AddSetForm" fxLayout="row | wrap" fxLayoutAlign="space-around center">
+                <mat-form-field class="fields">
+                    <input matInput type="number" placeholder="Rest Between Sets(Seconds)" formControlName="restSecondsBetweenSet" autocomplete="off"/>
+                </mat-form-field>
+                <mat-form-field class="fields">
+                    <input matInput type="number" placeholder="Number of Repetitions" formControlName="numberOfReps" autocomplete="off"/>
+                </mat-form-field>
+                <mat-form-field class="fields">
+                    <input matInput type="number" placeholder="Weight" formControlName="weight" autocomplete="off"/>
+                </mat-form-field>
+            </form>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let set of exerciseDTO?.exerciseSets; let index = index;" class="sets">
+                <div>{{index+1}}.</div>                    
+                <div class="setFields">
+                    <i class="far fa-clock"></i>{{set.restSecondsBetweenSet}}
+                </div>
+                <div class="setFields">
+                    <i class="fas fa-tasks"></i>{{set.numberOfReps}}
+                </div>
+                <div class="setFields">
+                    <i class="fas fa-weight-hanging"></i>{{set.weight}}
+                </div>   
+                <button (click)="DeleteSet( set.id )" matTooltip="Delete Set" [matTooltipShowDelay]="500"><i class="fas fa-times"></i></button>
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
     <div>
 
     </div>
 </div>
+
+<mat-menu #menu="matMenu">
+    <div class="matMenu">
+        <label><i>Comments:</i></label><br>
+        {{exerciseTemplateDTO?.comments}}<br><br>
+        <label><i>Tempo:</i></label><br>
+        {{exerciseTemplateDTO?.tempo}}<br><br>
+        <label><i>Primary Muscle:</i></label><br>
+        {{exerciseTemplateDTO?.primaryMuscle}}<br><br>
+        <label><i>Secondary Muscle:</i></label><br>
+        {{exerciseTemplateDTO?.secondaryMuscle}}
+    </div>
+</mat-menu>

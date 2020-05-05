@@ -1,5 +1,4 @@
 <div class="container">
-
   <div *ngFor="let exerciseDTO of exerciseDTOs; let first = first; let last=last;">
     <div fxLayout="row" fxLayoutAlign="space-between stretch" class="exerciseContainer">
       <app-edit-exercise [exerciseDTO]="exerciseDTO" class="exerciseAccordion"></app-edit-exercise>
@@ -18,7 +17,6 @@
         <mat-placeholder class="placeholder">Workout Comments</mat-placeholder>
         <textarea class="wodesctarea" type="text" matInput autocomplete="off" [formControl]="workoutComments"></textarea>
     </mat-form-field>
-
     <button title="Save Workout Comments" (click)="AddWorkoutComments()" [disabled]="!workoutComments.dirty">
       <mat-icon *ngIf="!notification">save</mat-icon>
       <mat-icon *ngIf="notification" class="elementToFadeInAndOut done">done</mat-icon>

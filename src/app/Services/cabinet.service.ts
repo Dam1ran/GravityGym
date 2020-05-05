@@ -12,6 +12,7 @@ import { PaginatedRequest } from '../classes/PageModels/PaginatedRequest';
 import { PaginatedResult } from '../classes/PageModels/PaginatedResult';
 import { ApplicationUserDTO } from '../classes/ApplicationUserDTO';
 import { ExerciseDTO } from '../classes/WORoutine/ExerciseDTO';
+import { ExerciseSetDTO } from '../classes/WORoutine/ExerciseSetDTO';
 
 
 @Injectable({
@@ -197,6 +198,25 @@ export class CabinetService {
     const endpoint: string = this.cabinet+'swapdown';
 
     return this.http.post<ExerciseDTO[]>(endpoint,data);
+  }
+
+  public GetExerciseTemplate(id: number) : Observable<ExerciseTemplateDTO>
+  {
+    const endpoint: string = this.cabinet+'getexercisetemplate';
+
+    return this.http.get<ExerciseTemplateDTO>(endpoint+`/${id}`);
+  }
+
+  public AddSet(data) : Observable<ExerciseSetDTO>
+  {
+    const endpoint: string = this.cabinet+'addSet';
+    return this.http.post<ExerciseSetDTO>(endpoint,data);
+  }
+
+  public DeleteSet(id: number)
+  {
+    const endpoint: string = this.cabinet+'deleteset';
+    return this.http.delete<any>(endpoint+`/${id}`);
   }
 
 }

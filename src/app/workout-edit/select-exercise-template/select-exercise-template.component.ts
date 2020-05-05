@@ -43,9 +43,12 @@ export class SelectExerciseTemplateComponent implements OnInit {
     );
   }
 
-  private existsByName(name: string) : boolean  {
-    return this.filteredETDTOs.find(x=>x.name===name) ? true : false;
-  }
+  // private existsByName(name: string) : boolean  {
+  //   return this.filteredETDTOs.find(x=>x.name===name) ? true : false;
+  // }
+
+  private existsByName = (name: string)=> this.filteredETDTOs.find(x=>x.name===name) ? true : false;
+  
 
   displayFn(etd: ExerciseTemplateDTO) {
     if (etd) { return etd.name; }

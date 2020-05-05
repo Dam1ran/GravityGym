@@ -45,7 +45,10 @@
                 <path class="cls-1" d="M306.77,163.18H300.4V149.12l-11.35-19.27h7.27l7.91,13.75,7.57-13.75h5.76l-10.79,19.27Z" transform="translate(-39.51 -128.84)"/>
                 <path class="cls-1" d="M355.73,163.18H349.6V134l-9.22,29.18h-3.15L328,134v29.18H323V129.85h9.4l7,21.46,6.86-21.46h9.45Z" transform="translate(-39.51 -128.84)"/>
             </svg>    
-            <H2>Where The Force Meets The Goals!</H2>
+            <!-- <H2>Where The Force Meets The Goals!</H2> -->
+            <H2>
+                <span *ngFor="let letter of slogan; let index = index" [ngClass] ="{'letter': applyGlow[index] }">{{letter}}</span>
+            </H2>
         </div>
         
     </div>

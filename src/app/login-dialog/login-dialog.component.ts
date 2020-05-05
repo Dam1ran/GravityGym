@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AuthService } from '../Services/auth.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BearerToken } from '../classes/BearerToken';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ export class LoginDialogComponent implements OnInit {
       public dialogRef: MatDialogRef<LoginDialogComponent>,
       private auth:AuthService,
       private fb: FormBuilder,
+      public snackBar: MatSnackBar,
       private router: Router
   ) {}
 
@@ -49,6 +50,8 @@ export class LoginDialogComponent implements OnInit {
            localStorage.setItem('userRole',bearerToken.userRole);           
            this.closeModal();
            this.router.navigate(['MainPage']);
+           this.Message('Logged In');
+
           },
          (err) =>{
            this.wrongCredentials=true;
@@ -63,6 +66,16 @@ export class LoginDialogComponent implements OnInit {
       this.shakeIt = false;
     },
     300);
+  }
+
+  Message(msg: string){
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'bottom';
+    config.horizontalPosition = 'center';
+    config.duration = 1500;
+    config.panelClass = ['snackPanel']
+    
+    this.snackBar.open(msg,null, config);
   }
 
 }

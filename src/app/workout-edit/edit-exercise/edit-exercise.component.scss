@@ -3,4 +3,81 @@
 }
 .exercise{
     width: 100%;    
+    .formBtnRow{
+        margin-bottom: 10px;
+    }
+    span{
+        font-size: 22px;
+        margin-left: 5px;
+        color: grey;
+        cursor: pointer;
+    }
+
+    .addBtn{
+        margin: auto;
+        font-size: 18px;
+        color: rebeccapurple;
+        padding: 0 10px;
+        border: 1px solid;
+        i{
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+    }
+    .clearBtn{
+        margin: auto;
+        font-size: 18px;
+        color: rebeccapurple;
+        border: 1px solid;
+    }
+    .addBtn:disabled,.clearBtn:disabled{
+        color: grey;
+    }
+    form{
+        font-size: 16px;
+        .fields{
+            margin: 0 5px;
+        }
+        input{
+            margin: 0 5px;            
+        }
+    }
+    .sets{
+        font-size: 18px;
+        margin-bottom: 3px;
+        button{
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.0);
+
+        }
+        button:active{
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+
+        }
+    }
+    .sets:nth-child(even){
+        background-color: rgba(0,0,0,0.05);
+    }
+
+    .setFields{
+        // width: 180px;
+        text-align: left;
+        overflow: hidden;
+        width: 65px;
+        margin: auto;
+        i{
+            margin-right: 5px;
+        }
+    }
+}
+
+.matMenu{
+    padding: 5px;
+    max-width: 320px;
+    font-size: 14px;
+    background-color: rgba(0,0,0,0.05);
 }

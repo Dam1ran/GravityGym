@@ -2,59 +2,36 @@
 <div fxLayout="row | wrap" fxLayoutAlign="center start" class="upperContainer">
 
     <mat-accordion class="accordion">
-
             <mat-expansion-panel [(expanded)]="panelOpenState" class="mat-elevation-z8" (opened)="accOpened()" (closed)="accClosed()">
-
-                <mat-expansion-panel-header>
-    
+                <mat-expansion-panel-header>    
                     <mat-panel-title>
                       Add New Workout Routine
-                    </mat-panel-title>
-    
-                </mat-expansion-panel-header>
-          
-                <form [formGroup]="AddRoutineForm" fxLayout="column" fxLayoutAlign="center center">            
-    
-                    <mat-form-field class="addRoutine">
-    
-                        <input matInput placeholder="Routine Title"  type="text" formControlName="title" autocomplete="off"/>
-    
+                    </mat-panel-title>    
+                </mat-expansion-panel-header>          
+                <form [formGroup]="AddRoutineForm" fxLayout="column" fxLayoutAlign="center center">    
+                    <mat-form-field class="addRoutine">    
+                        <input matInput placeholder="Routine Title"  type="text" formControlName="title" autocomplete="off"/>    
+                    </mat-form-field>    
+                    <mat-form-field class="descriptionField">    
+                        <textarea class="description" type="text" name="description" matInput placeholder="Description" autocomplete="off" formControlName="description"></textarea>    
                     </mat-form-field>
-    
-                    <mat-form-field class="descriptionField">
-    
-                        <textarea class="description" type="text" name="description" matInput placeholder="Description" autocomplete="off" formControlName="description"></textarea>
-    
-                    </mat-form-field>
-
                     <button mat-button (click)="AddRoutine()" class="selectorBtn" [disabled]="!AddRoutineForm.valid">
                         <i class="fas fa-plus-circle"></i>
-                    </button>
-    
-                </form>
-    
-            </mat-expansion-panel>
-    
+                    </button>    
+                </form>    
+            </mat-expansion-panel>    
     </mat-accordion> 
 
     <form class="routineSelectorContainer" [formGroup]="RoutineSelectorForm"  fxLayout="row" fxLayoutAlign="center center">
-
-        <mat-form-field class="routineSelector" >
-                                                                                                
-            <mat-select [(value)]="routineSelected" placeholder="- Select Routine -" formControlName="rSelector" (selectionChange)="onSelectionRoutineChange( routineSelected )">
-                            
-                <mat-option *ngFor="let routine of wORoutinesName" [value]="routine.id">{{routine.title}}</mat-option>
-            
+        <mat-form-field class="routineSelector" >                                                                                                
+            <mat-select [(value)]="routineSelected" placeholder="- Select Routine -" formControlName="rSelector" (selectionChange)="onSelectionRoutineChange( routineSelected )">                            
+                <mat-option *ngFor="let routine of wORoutinesName" [value]="routine.id">{{routine.title}}</mat-option>            
             </mat-select>
-
         </mat-form-field> 
-
         <button (click)="RemoveRoutineDialog( routineSelected )" [disabled]="!RoutineSelectorForm.valid  || panelOpenState" class="deleteRoutine" title="Delete Routine">
             <i class="far fa-trash-alt"></i>
         </button>
-
     </form>
-
 </div>
 
 <div class="wOdescription mat-elevation-z8" *ngIf="!panelOpenState">

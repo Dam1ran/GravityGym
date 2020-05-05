@@ -70,8 +70,7 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   onUpdateWorkout(event: ExerciseDTO[]){
-    this.exerciseDTOs = event;
-    console.log(this.exerciseDTOs);
+    this.exerciseDTOs = event;    
   }
 
   swapDown(exerciseDTO: ExerciseDTO){
@@ -91,7 +90,6 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   deleteExercise(exerciseDTO: ExerciseDTO){
-
     this.cabinet.DeleteExercise(exerciseDTO.id)
     .subscribe(
       res=>{
@@ -102,8 +100,7 @@ export class WorkoutEditComponent implements OnInit {
         }
       },
       err=>{console.log(err);}
-    );   
-    
+    );    
   }
 
 }

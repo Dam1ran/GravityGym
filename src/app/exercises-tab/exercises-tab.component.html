@@ -10,7 +10,7 @@
             <input matInput [formControl]="searchInput" (keyup.enter)="applySearch()" class="searchInput">
         </mat-form-field>
         <mat-progress-spinner *ngIf="isLoading" diameter="35" mode="indeterminate" strokeWidth="6"></mat-progress-spinner>    
-        <mat-paginator [length]="pagedExerciseTemplates?.total" [pageSizeOptions]="[5, 10, 25, 50]" pageSize="5" [showFirstLastButtons]="true"></mat-paginator>            
+        <mat-paginator [length]="pagedExerciseTemplates?.total" [pageSizeOptions]="[5, 10, 25, 50]" pageSize="10" [showFirstLastButtons]="true"></mat-paginator>            
    </div>
 </div>
 

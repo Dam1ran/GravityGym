@@ -27,7 +27,8 @@ import {
          MatSlideToggleModule,
          MatSortModule,
          MatTooltipModule,
-         MatMenuModule
+         MatMenuModule,
+         MatBadgeModule
                 
         }
          from "@angular/material";
@@ -133,6 +134,7 @@ import { EditExerciseComponent } from './workout-edit/edit-exercise/edit-exercis
     MatSnackBarModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
+    MatBadgeModule,
     MatSortModule,
     MatTooltipModule,
     MatMenuModule
