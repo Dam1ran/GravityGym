@@ -23,7 +23,7 @@
                 </mat-form-field>
             </form>
 
-            <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let set of exerciseDTO?.exerciseSets; let index = index;" class="sets">
+            <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let set of exerciseDTO?.sets; let index = index;" class="sets">
                 <div>{{index+1}}.</div>                    
                 <div class="setFields">
                     <i class="far fa-clock"></i>{{set.restSecondsBetweenSet}}

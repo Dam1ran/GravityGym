@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Fader } from '../Shared/fader';
-import { InformationService } from '../Services/information.service';
 import { AuthService } from '../Services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OurTeamMember } from '../classes/OurTeamMember';
+import { MemberService } from '../Services/member.service';
 
 @Component({
   selector: 'app-our-team',
@@ -20,7 +20,7 @@ export class OurTeamComponent extends Fader implements OnInit {
 
 
   constructor(
-    private infoService: InformationService,
+    private memberService: MemberService,
     private authService: AuthService,
     private fb: FormBuilder
     ) { super(); }
@@ -51,7 +51,7 @@ export class OurTeamComponent extends Fader implements OnInit {
 
 
   Refresh(){
-    this.infoService.GetTeamMembers()
+    this.memberService.GetTeamMembers()
     .subscribe(
       res=>
       {
@@ -60,8 +60,7 @@ export class OurTeamComponent extends Fader implements OnInit {
     )
   }
 
-  addTeamMember(){
-    
+  addTeamMember(){    
     let ourTeamMember : OurTeamMember = new OurTeamMember();
 
     ourTeamMember.fullName    = this.ourTeamForm.controls['fullName'].value;
@@ -69,7 +68,7 @@ export class OurTeamComponent extends Fader implements OnInit {
     ourTeamMember.description = this.ourTeamForm.controls['description'].value;
     ourTeamMember.moto        = this.ourTeamForm.controls['moto'].value;
     
-    this.infoService.SubmitOurTeamMember(this.avatarToUpload,this.imageToUpload,ourTeamMember)
+    this.memberService.SubmitOurTeamMember(this.avatarToUpload,this.imageToUpload,ourTeamMember)
     .subscribe(
       res=>
       {        
@@ -80,7 +79,7 @@ export class OurTeamComponent extends Fader implements OnInit {
   }
 
   deleteTeamMember(id){
-    this.infoService.DeleteTeamMember(id)
+    this.memberService.DeleteTeamMember(id)
     .subscribe
     (
       res=>

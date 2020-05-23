@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CabinetService } from '../Services/cabinet.service';
 import { ClientDTO } from '../classes/ClientDTO';
+import { CoachService } from '../Services/coach.service';
 
 @Component({
   selector: 'app-manage-clients',
@@ -11,14 +11,13 @@ export class ManageClientsComponent implements OnInit {
 
   public clients: ClientDTO[];
 
-  constructor(private cabinetService: CabinetService) { }
+  constructor(private coachService: CoachService) { }
 
   ngOnInit() {
-    this.cabinetService.GetMyClients()
-    .subscribe
-    (
+    this.coachService.GetMyClients()
+    .subscribe(
       res=>{this.clients = res;}
     )
-  }
-
+  };
+  
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CabinetService } from '../Services/cabinet.service';
 import { WoRoutineDTO } from '../classes/WORoutine/WoRoutineDTO';
 import { MatSnackBar, MatSnackBarConfig, MatDialog } from '@angular/material';
 import { WORoutineDescriptionService } from '../Services/woroutine-description.service';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { RoutineService } from '../Services/routine.service';
 
 @Component({
   selector: 'app-workout-tab',
@@ -24,7 +24,7 @@ export class WorkoutTabComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private cabinetService: CabinetService,
+    private routineService: RoutineService,
     public snackBar: MatSnackBar,
     private woDescService: WORoutineDescriptionService,
     public dialog: MatDialog
@@ -40,7 +40,7 @@ export class WorkoutTabComponent implements OnInit {
       rSelector: ['',[Validators.required]]      
     });
 
-    this.cabinetService.GetWORoutinesName()
+    this.routineService.GetWORoutinesName()
     .subscribe(
       res=>{
         this.wORoutinesName = res;
@@ -57,7 +57,7 @@ export class WorkoutTabComponent implements OnInit {
   AddRoutine(){
     this.panelOpenState = false;   
 
-    this.cabinetService.AddWORoutine(this.AddRoutineForm.value)
+    this.routineService.AddWORoutine(this.AddRoutineForm.value)
     .subscribe(
       res=>{
         this.wORoutinesName.push(res);   
@@ -76,7 +76,7 @@ export class WorkoutTabComponent implements OnInit {
   RemoveRoutine( id: number ){
     if( id!==0 ){
       this.woDescService.changeMessage('Routine Description');
-      this.cabinetService.DeleteWORoutine(id)
+      this.routineService.DeleteWORoutine(id)
       .subscribe(
         res=>{
           if(res.deleted){

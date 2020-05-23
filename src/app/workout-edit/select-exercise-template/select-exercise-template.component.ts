@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { tap, debounceTime, distinctUntilChanged, filter, switchMap, finalize } from 'rxjs/operators';
-import { CabinetService } from 'src/app/Services/cabinet.service';
 import { ExerciseTemplateDTO } from 'src/app/classes/ExerciseTemplateDTO';
 import { SimplePaginatedRequest } from 'src/app/classes/PageModels/SimplePaginatedRequest';
 import { ExerciseDTO } from 'src/app/classes/WORoutine/ExerciseDTO';
+import { ExerciseTemplateService } from 'src/app/Services/exercise-template.service';
+import { ExerciseService } from 'src/app/Services/exercise.service';
 
 @Component({
   selector: 'app-select-exercise-template',
@@ -23,14 +24,16 @@ export class SelectExerciseTemplateComponent implements OnInit {
   exerciseChoosen = false;
   noResults = false;
 
-  constructor(private cabinet: CabinetService) {
+  constructor(
+    private exerciseTemplateService: ExerciseTemplateService,
+    private exerciseService: ExerciseService) {
     this.etdCtrl.valueChanges.pipe(
       tap(x=>{this.exerciseChoosen = x.name ? true : false;}),       
       debounceTime(500),
       distinctUntilChanged(),
       filter(x=>!this.existsByName(x.name)),
       tap(()=>this.isLoading=true),          
-      switchMap(text=>this.cabinet.GetExerciseTemplates(
+      switchMap(text=>this.exerciseTemplateService.GetExerciseTemplates(
         new SimplePaginatedRequest("name",text.name?text.name:text)
         ).pipe(finalize(()=>this.isLoading=false))
       .pipe(finalize(() => this.isLoading = false)))          
@@ -43,12 +46,7 @@ export class SelectExerciseTemplateComponent implements OnInit {
     );
   }
 
-  // private existsByName(name: string) : boolean  {
-  //   return this.filteredETDTOs.find(x=>x.name===name) ? true : false;
-  // }
-
-  private existsByName = (name: string)=> this.filteredETDTOs.find(x=>x.name===name) ? true : false;
-  
+  private existsByName = (name: string)=> this.filteredETDTOs.find(x=>x.name===name) ? true : false;  
 
   displayFn(etd: ExerciseTemplateDTO) {
     if (etd) { return etd.name; }
@@ -63,7 +61,7 @@ export class SelectExerciseTemplateComponent implements OnInit {
       const exerciseDTO = new ExerciseDTO();
       exerciseDTO.exerciseTemplateId = this.etdCtrl.value.id;
       exerciseDTO.workoutId = this.workoutId;
-      this.cabinet.AddExerciseToWorkout(exerciseDTO)
+      this.exerciseService.AddExerciseToWorkout(exerciseDTO)
       .subscribe(
         res=>{this.updateWorkout.emit(res);},
         err=>{console.log(err);}

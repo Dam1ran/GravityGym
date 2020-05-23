@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DaySchedule } from '../classes/DaySchedule';
-import { InformationService } from '../Services/information.service';
 import { AuthService } from '../Services/auth.service';
+import { ScheduleService } from '../Services/schedule.service';
 
 @Component({
   selector: 'app-day-schedule',
@@ -19,8 +19,7 @@ import { AuthService } from '../Services/auth.service';
 })
 export class DayScheduleComponent implements OnInit {
   
-  @Input() dayOfWeek : string;
-  
+  @Input() dayOfWeek : string;  
 
   private isAdminRole: boolean;
   public dayScheduleForm : FormGroup;
@@ -28,18 +27,15 @@ export class DayScheduleComponent implements OnInit {
   fileToUpload: File = null;
   columnsToDisplay = ['time', 'practice'];
   expandedElement: DaySchedule | null;
-  /*
-  dataSource = ELEMENT_DATA;
-  */
+  
   constructor(
-    private infoService: InformationService,
+    private scheduleService: ScheduleService,
     private authService: AuthService,
     private fb: FormBuilder 
   ) { }
 
 
-  ngOnInit() {    
-
+  ngOnInit() {
     this.dayScheduleForm = this.fb.group({   
       practice: ['',[Validators.required]],   
       hourMinute: ['',[Validators.required]],
@@ -57,17 +53,15 @@ export class DayScheduleComponent implements OnInit {
     this.fileToUpload = file.item(0);
   }
 
-  addSchedule(){
-    
+  addSchedule(){    
     let daySchedule : DaySchedule = new DaySchedule();
 
     daySchedule.dayOfWeek = this.dayOfWeek;
     daySchedule.Practice = this.dayScheduleForm.controls['practice'].value;
     daySchedule.description = this.dayScheduleForm.controls['description'].value;
-    daySchedule.Time = this.dayScheduleForm.controls['hourMinute'].value;    
-
+    daySchedule.Time = this.dayScheduleForm.controls['hourMinute'].value;
     
-    this.infoService.SubmitSchedule(this.fileToUpload,daySchedule)
+    this.scheduleService.SubmitSchedule(this.fileToUpload,daySchedule)
     .subscribe(
       res=>
       {         
@@ -80,22 +74,19 @@ export class DayScheduleComponent implements OnInit {
     );
   }
 
-  onDelete(id){
-    
-    this.infoService.DeleteSchedule(id).subscribe
-    (
+  onDelete(id){    
+    this.scheduleService.DeleteSchedule(id)
+    .subscribe(
       res=>
       {        
         this.Refresh();
       }
-
-    )       
+    );
   }
 
 
   Refresh(){
-
-    this.infoService.GetScheduleForDay(this.dayOfWeek)
+    this.scheduleService.GetScheduleForDay(this.dayOfWeek)
     .subscribe(
       res=>
       {

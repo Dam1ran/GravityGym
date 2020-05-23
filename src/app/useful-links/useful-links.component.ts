@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { InformationService } from '../Services/information.service';
 import { UsefulLink } from '../classes/UsefulLink';
 import { AuthService } from '../Services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LinksService } from '../Services/links.service';
 
 @Component({
   selector: 'app-useful-links',
@@ -12,7 +12,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class UsefulLinksComponent implements OnInit {
 
   constructor(
-    private infoService: InformationService,
+    private linksService: LinksService,
     private authService: AuthService,
     private fb: FormBuilder 
   ) { }
@@ -21,8 +21,7 @@ export class UsefulLinksComponent implements OnInit {
   public usefulLinks: UsefulLink[];
   private isCoachRole: boolean;
 
-  ngOnInit() {
-    
+  ngOnInit() {    
     this.Refresh();
 
     this.isCoachRole=this.authService.getUserRole() === "Coach" ? true : false;
@@ -34,38 +33,30 @@ export class UsefulLinksComponent implements OnInit {
 
   }
 
-  onDelete(id){
-    
-    this.infoService.DeleteUsefulLinks(id)
-    .subscribe
-    (
+  onDelete(id){    
+    this.linksService.DeleteUsefulLinks(id)
+    .subscribe(
       res=>
       {       
         this.Refresh();
-      }
-
-    );
+      });
 
   }
 
-
   Refresh(){
-    this.infoService.GetUsefulLinks()
-    .subscribe
-    (
+    this.linksService.GetUsefulLinks()
+    .subscribe(
       res=>
       {
         this.usefulLinks = res;        
       },
-      err=>{console.log(err)},
-
+      err=>{console.log(err)}
     );
   }
 
   addLink(){
-    this.infoService.PostUsefulLinks(this.usefulLinkForm.value)
-    .subscribe
-    (
+    this.linksService.PostUsefulLinks(this.usefulLinkForm.value)
+    .subscribe(
       res=>
       {
         this.usefulLinkForm.controls['link'].setValue('');

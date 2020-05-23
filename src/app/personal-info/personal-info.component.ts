@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CabinetService } from '../Services/cabinet.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PersonalInfoService } from '../Services/personal-info.service';
 
 @Component({
   selector: 'app-personal-info',
@@ -14,7 +14,7 @@ export class PersonalInfoComponent implements OnInit {
   public notification = null;
 
   constructor(
-    private cabinetService: CabinetService,
+    private personalInfoService: PersonalInfoService,
     private fb: FormBuilder
     ) { }
 
@@ -38,9 +38,8 @@ export class PersonalInfoComponent implements OnInit {
 
 
 
-    this.cabinetService.GetPersonalInfo()
-    .subscribe
-    (
+    this.personalInfoService.GetPersonalInfo()
+    .subscribe(
       res=>
       {
         this.personalInfoForm.controls['id'].setValue(res.id)
@@ -62,15 +61,12 @@ export class PersonalInfoComponent implements OnInit {
         }    
         
       }
-    );
-      
-      
+    );     
 
   }
 
-  UpdatePersonalInfo(){
-        
-    this.cabinetService.SavePersonalInfo(this.personalInfoForm.value)
+  UpdatePersonalInfo(){        
+    this.personalInfoService.SavePersonalInfo(this.personalInfoForm.value)
     .subscribe(
       res=>
       {

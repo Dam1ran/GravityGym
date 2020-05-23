@@ -5,6 +5,6 @@ export class WorkoutDTO {
     order: number;    
     estimatedMin: number;    
     workoutComments: string;      
-    woRoutineId: number;
+    routineId: number;
     exercises: ExerciseDTO[];
 }

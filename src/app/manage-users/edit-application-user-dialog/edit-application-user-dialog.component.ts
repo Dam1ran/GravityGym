@@ -3,10 +3,10 @@ import { ApplicationUserDTO } from 'src/app/classes/ApplicationUserDTO';
 import { CoachDTO } from 'src/app/classes/CoachDTO';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CabinetService } from 'src/app/Services/cabinet.service';
 import  *  as _ from 'lodash';
 import { SaveUserRoleDTO } from 'src/app/classes/SaveUserRoleDTO';
 import { ActionCoachDTO } from 'src/app/classes/ActionCoachDTO';
+import { AdminService } from 'src/app/Services/admin.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class EditApplicationUserDialogComponent implements OnInit {
   constructor(    
     public dialogRef: MatDialogRef<EditApplicationUserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ApplicationUserDTO,
-    private cabinetService: CabinetService,
+    private adminService: AdminService,
     private fb: FormBuilder
   ) { }
 
@@ -43,7 +43,7 @@ export class EditApplicationUserDialogComponent implements OnInit {
   }
   
   GetCoaches(){
-    this.cabinetService.GetCoaches()
+    this.adminService.GetCoaches()
     .subscribe(
       res=>{
         this.coachesDTOs = res;
@@ -56,14 +56,12 @@ export class EditApplicationUserDialogComponent implements OnInit {
     this.saveCoachDisabled=event.value===id;
   }
 
-  SaveCoach(userEmail, coachId){
-
-    
+  SaveCoach(userEmail, coachId){    
     let actionCoachDTO = new ActionCoachDTO();
     actionCoachDTO.clientEmail = userEmail;
     actionCoachDTO.coachEmail = this.coachesDTOs.find(x=>x.id===coachId).email;
    
-    this.cabinetService.AssignCoach(actionCoachDTO)
+    this.adminService.AssignCoach(actionCoachDTO)
     .subscribe(
       res=>
       {
@@ -75,12 +73,11 @@ export class EditApplicationUserDialogComponent implements OnInit {
   }
 
   UnasignCoach(userEmail, coachId){
-
     let actionCoachDTO = new ActionCoachDTO();
     actionCoachDTO.clientEmail = userEmail;
     actionCoachDTO.coachEmail = this.coachesDTOs.find(x=>x.id===coachId).email;
    
-    this.cabinetService.UnassignCoach(actionCoachDTO)
+    this.adminService.UnassignCoach(actionCoachDTO)
     .subscribe(
       res=>
       {
@@ -100,7 +97,7 @@ export class EditApplicationUserDialogComponent implements OnInit {
     let saveUserRoleDTO = new SaveUserRoleDTO();
     saveUserRoleDTO.userEmail=email;
     saveUserRoleDTO.roleId=roleId;
-    this.cabinetService.SaveUserRole(saveUserRoleDTO)
+    this.adminService.SaveUserRole(saveUserRoleDTO)
     .subscribe(
       res=>
       {

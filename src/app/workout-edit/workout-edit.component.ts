@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { CabinetService } from '../Services/cabinet.service';
 import { WorkoutDTO } from '../classes/WORoutine/WorkoutDTO';
 import { ExerciseDTO } from '../classes/WORoutine/ExerciseDTO';
+import { WorkoutService } from '../Services/workout.service';
+import { ExerciseService } from '../Services/exercise.service';
 
 @Component({
   selector: 'app-workout-edit',
@@ -22,19 +23,20 @@ export class WorkoutEditComponent implements OnInit {
   
   workoutComments = new FormControl('');
 
-  constructor(private cabinet: CabinetService)  {}
+  constructor(
+    private exerciseService: ExerciseService,
+    private workoutService: WorkoutService
+    )  {}
 
   ngOnInit() {
     this.GetWorkout();
     this.GetExercises();    
   }
 
-
-
   AddWorkoutComments(){    
     let req = Object.assign({}, this.workout);
     req.workoutComments = this.workoutComments.value;
-    this.cabinet.UpdateWorkoutDescription(req)
+    this.workoutService.UpdateWorkoutDescription(req)
     .subscribe(
       res=>{        
         this.workout = res;           
@@ -48,7 +50,7 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   GetWorkout(){
-    this.cabinet.GetWorkout(this.workoutInput.id)
+    this.workoutService.GetWorkout(this.workoutInput.id)
     .subscribe(
       res=>{
         this.workout = res;
@@ -62,7 +64,7 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   GetExercises() {
-    this.cabinet.GetExercisesFromWorkout(this.workoutInput.id)
+    this.exerciseService.GetExercisesFromWorkout(this.workoutInput.id)
     .subscribe(
       res=>{this.exerciseDTOs = res;},
       err=>{console.log(err);}
@@ -74,7 +76,7 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   swapDown(exerciseDTO: ExerciseDTO){
-    this.cabinet.SwapDown(exerciseDTO)
+    this.exerciseService.SwapDown(exerciseDTO)
     .subscribe(
       res=>{this.exerciseDTOs = res;},
       err=>{console.log(err);}
@@ -82,7 +84,7 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   swapUp(exerciseDTO: ExerciseDTO){
-    this.cabinet.SwapUp(exerciseDTO)
+    this.exerciseService.SwapUp(exerciseDTO)
     .subscribe(
       res=>{this.exerciseDTOs = res;},
       err=>{console.log(err);}
@@ -90,7 +92,7 @@ export class WorkoutEditComponent implements OnInit {
   }
 
   deleteExercise(exerciseDTO: ExerciseDTO){
-    this.cabinet.DeleteExercise(exerciseDTO.id)
+    this.exerciseService.DeleteExercise(exerciseDTO.id)
     .subscribe(
       res=>{
         if(res.deleted){

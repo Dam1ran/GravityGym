@@ -55,7 +55,7 @@
     </ng-container>
     <ng-container matColumnDef="userRoleId">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Role </mat-header-cell>
-        <mat-cell *matCellDef="let applicationUser"> {{applicationUser.roleString}} </mat-cell>
+        <mat-cell *matCellDef="let applicationUser" [ngClass] ="{'coach': applicationUser.userRoleId===2, 'manager': applicationUser.userRoleId===3, 'admin': applicationUser.userRoleId===4 }"> {{applicationUser.roleString}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">

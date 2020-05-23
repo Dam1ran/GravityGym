@@ -6,5 +6,5 @@ export class ExerciseDTO {
     order: number;    
     exerciseTemplateId: number;    
     workoutId: number;
-    exerciseSets: ExerciseSetDTO[];
+    sets: ExerciseSetDTO[];
 }

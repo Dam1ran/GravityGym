@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CabinetService } from '../Services/cabinet.service';
 import { WORoutineDescriptionService } from '../Services/woroutine-description.service';
 import { WoRoutineDTO } from '../classes/WORoutine/WoRoutineDTO';
 import { WorkoutDTO } from '../classes/WORoutine/WorkoutDTO';
 import { MatTabGroup, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { RoutineService } from '../Services/routine.service';
+import { WorkoutService } from '../Services/workout.service';
 
 
 @Component({
@@ -21,9 +21,9 @@ export class WorkoutRoutineEditComponent implements OnInit {
   workouts: WorkoutDTO[] = [];
 
   constructor(
-    private fb: FormBuilder,
     private woDescService: WORoutineDescriptionService,
-    private cabinetService: CabinetService,
+    private routineService: RoutineService,
+    private workoutService: WorkoutService,    
     public dialog: MatDialog) {  }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class WorkoutRoutineEditComponent implements OnInit {
 
   ngOnChanges() {        
     if(this.routine) {      
-      this.cabinetService.GetWORoutine(this.routine.id)
+      this.routineService.GetWORoutine(this.routine.id)
       .subscribe(
         res=>{        
           this.woDescService.changeMessage(res.description);          
@@ -54,9 +54,9 @@ export class WorkoutRoutineEditComponent implements OnInit {
     let request = new WorkoutDTO;
     request.order = this.numberOfWorkouts;
     request.estimatedMin = 60;
-    request.woRoutineId = this.routine.id;
+    request.routineId = this.routine.id;
 
-    this.cabinetService.AddWorkout(request)
+    this.workoutService.AddWorkout(request)
     .subscribe(
       res=>{
         this.workouts.push(res);
@@ -72,7 +72,7 @@ export class WorkoutRoutineEditComponent implements OnInit {
   }
 
   RemoveLastWorkout(){
-    this.cabinetService.DeleteLastWorkoutFromRoutine(this.routine.id)
+    this.workoutService.DeleteLastWorkoutFromRoutine(this.routine.id)
     .subscribe(
       res=>
       {

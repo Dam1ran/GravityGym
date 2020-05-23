@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ExerciseDTO } from 'src/app/classes/WORoutine/ExerciseDTO';
-import { CabinetService } from 'src/app/Services/cabinet.service';
 import { ExerciseTemplateDTO } from 'src/app/classes/ExerciseTemplateDTO';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ExerciseTemplateService } from 'src/app/Services/exercise-template.service';
+import { SetService } from 'src/app/Services/set.service';
 
 @Component({
   selector: 'app-edit-exercise',
@@ -19,7 +20,8 @@ export class EditExerciseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private cabinet: CabinetService
+    private setService: SetService,
+    private exerciseTemplateService: ExerciseTemplateService
   ) { }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class EditExerciseComponent implements OnInit {
       weight: [null,[Validators.min(0),Validators.max(999)]]
     });  
 
-    this.cabinet.GetExerciseTemplate(this.exerciseDTO.exerciseTemplateId)
+    this.exerciseTemplateService.GetExerciseTemplate(this.exerciseDTO.exerciseTemplateId)
     .subscribe(
       res=>
       {
@@ -43,22 +45,22 @@ export class EditExerciseComponent implements OnInit {
   }
 
   AddSet(){
-    this.cabinet.AddSet(this.AddSetForm.value)
+    this.setService.AddSet(this.AddSetForm.value)
     .subscribe(
       res=>{
-        this.exerciseDTO.exerciseSets.push(res);
+        this.exerciseDTO.sets.push(res);
       },
       err=>{console.log(err);}
     );
   }
 
   DeleteSet(id){
-    this.cabinet.DeleteSet(id)
+    this.setService.DeleteSet(id)
     .subscribe(
       res=>{
         if(res.deleted){
-          this.exerciseDTO.exerciseSets.forEach( (item, index) => {
-            if(item.id === id) this.exerciseDTO.exerciseSets.splice(index,1);
+          this.exerciseDTO.sets.forEach( (item, index) => {
+            if(item.id === id) this.exerciseDTO.sets.splice(index,1);
           });
         }
       },

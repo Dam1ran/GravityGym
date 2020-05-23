@@ -2,9 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ExerciseTemplateDTO } from 'src/app/classes/ExerciseTemplateDTO';
 import { MuscleDTO } from 'src/app/classes/MuscleDTO';
-import { CabinetService } from 'src/app/Services/cabinet.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import  *  as _ from 'lodash';
+import { MuscleService } from 'src/app/Services/muscle.service';
+import { ExerciseTemplateService } from 'src/app/Services/exercise-template.service';
 
 @Component({
   selector: 'app-exercise-template-dialog',
@@ -17,11 +18,11 @@ export class ExerciseTemplateDialogComponent implements OnInit {
   private musclesDTOs: MuscleDTO[];
   public AddExerciseTemplateForm : FormGroup;
 
-
   constructor(    
     public dialogRef: MatDialogRef<ExerciseTemplateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ExerciseTemplateDTO,
-    private cabinetService: CabinetService,
+    private muscleService: MuscleService,    
+    private exerciseTemplateService: ExerciseTemplateService,
     private fb: FormBuilder
   ) { }
 
@@ -34,7 +35,7 @@ export class ExerciseTemplateDialogComponent implements OnInit {
       primaryMuscleId: [0],
       secondaryMuscleId: [0]
     });
-    this.cabinetService.GetMusclesList()
+    this.muscleService.GetMusclesList()
     .subscribe(
       res=>{
         this.musclesDTOs = res;
@@ -49,7 +50,9 @@ export class ExerciseTemplateDialogComponent implements OnInit {
   
   SaveExerciseTemplate(){
     this.loading = true;
-    this.cabinetService.SaveExerciseTemplate(this.AddExerciseTemplateForm.value)
+    if(this.AddExerciseTemplateForm.controls['primaryMuscleId'].value === 0) this.AddExerciseTemplateForm.controls['primaryMuscleId'].setValue(null);
+    if(this.AddExerciseTemplateForm.controls['secondaryMuscleId'].value === 0) this.AddExerciseTemplateForm.controls['secondaryMuscleId'].setValue(null);
+    this.exerciseTemplateService.SaveExerciseTemplate(this.AddExerciseTemplateForm.value)
     .subscribe(
       res=>{
         if(res.saved){

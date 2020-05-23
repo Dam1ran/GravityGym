@@ -4,7 +4,6 @@ import { ExerciseTemplateDTO } from '../classes/ExerciseTemplateDTO';
 import { TableColumn } from '../classes/PageModels/TableColumn';
 import { MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
-import { CabinetService } from '../Services/cabinet.service';
 import { PaginatedRequest } from '../classes/PageModels/PaginatedRequest';
 import { RequestFilters } from '../classes/PageModels/RequestFilters';
 import { FilterLogicalOperators } from '../classes/PageModels/FilterLogicalOperators';
@@ -12,6 +11,7 @@ import { merge } from 'rxjs';
 import { Filter } from '../classes/PageModels/Filter';
 import { ExerciseTemplateDialogComponent } from '../exercises-tab/exercise-template-dialog/exercise-template-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { ExerciseTemplateService } from '../Services/exercise-template.service';
 
 @Component({
   selector: 'app-exercises-tab',
@@ -40,13 +40,10 @@ export class ExercisesTabComponent implements AfterViewInit {
   filterForm: FormGroup;
   panelOpenState = false;
 
-  constructor
-  (
-    private cabinetService: CabinetService,
+  constructor(    
+    private exerciseTemplateService: ExerciseTemplateService,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder,
-
-  )
+    private formBuilder: FormBuilder)
   {
     this.displayedColumns = this.tableColumns.map(column => column.name);
     this.filterForm = this.formBuilder.group({
@@ -72,7 +69,7 @@ export class ExercisesTabComponent implements AfterViewInit {
   LoadExercises(){
     this.isLoading=true;
     const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
-    this.cabinetService.GetExerciseTemplates(paginatedRequest)
+    this.exerciseTemplateService.GetExerciseTemplates(paginatedRequest)
     .subscribe(
       res=>{
         this.pagedExerciseTemplates = res;
@@ -156,7 +153,7 @@ export class ExercisesTabComponent implements AfterViewInit {
   }
 
   RemoveExerciseTemplate(id: number){
-    this.cabinetService.DeleteExerciseTemplate(id)
+    this.exerciseTemplateService.DeleteExerciseTemplate(id)
     .subscribe(
       res=>{
         if(res.deleted){
